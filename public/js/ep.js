@@ -52,8 +52,8 @@
     } else {
       // we have reached max tries:
       stop_polling();
-      $('checkingemail').toggle();
-      $('notcheckingemail').toggle();
+      $('#checkingemail').toggle();
+      $('#notcheckingemail').toggle();
       alert("We haven't received any emails to this temporary address in a while, so we're just gonna stop checking automatically. The email address " + email + " is still good, though... just use your permalink or RSS feed to check for mail there.");
     }
   }
