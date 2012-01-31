@@ -1,13 +1,9 @@
 #emailbox
-  %h1
-    :javascript
-      //
-      document.write(email);
-      //
+  %h1.email
   #checkingemail
     %img#bar{:align => "absbottom", :alt => "RSS Feed", :src => "/images/ajax-loader.gif"}/
     checking for email...
-    %br>/
+    %br/
     (page will refresh when a message is received)
   #notcheckingemail{:style => "display: none;"}
     %p
@@ -15,21 +11,11 @@
       email address is still usable, just check the inbox using the links below. &lt;-- !!
   %p
     permalink:
-    :javascript
-      //
-      document.write('<a href="' + permalink + '">' + permalink + '</a>');
-      //
+    %a.inbox{ :href => '#' }
     %br/
-    :javascript
-      //
-      document.write('<a href="' + rsslink + '"');
-      //
     %img{:alt => "RSS Feed", :src => "/images/feed-icon-sm.png"}/
     RSS feed:
-    :javascript
-      //
-      document.write('<a href="' + rsslink + '">' + rsslink + '</a>');
-      //
+    %a.rss{ :href => '#' }
 %h3 What?
 %p
   eyepaste.com is a free
@@ -45,23 +31,13 @@
   is/was. Problem is
   that 2prong.com is not always up and I wanted one that is always (or least usually) up.  So, I took 2prong.com's basic concept
   (the code was open sourced so i feel like this is ok) and re-created it in
-  %a{:href => "http://symfony-project.org", :target => "_new"} symfony
+  %a{:href => "http://sinatrarb.com", :target => "_new"} sinatra
   and now we have the glory of eyepaste.
 %h3 How?
 %p A disposable email address has been ready-made for you in the box above.  Use it to sign up for something that requires email address verification but you know they will send you copious amounts of spam... it is too onerous to make a fake email address on gmail or hotmail, or yahoo mail or whatever.
 %p
   To check your disposable email address, this page will simply refresh automatically when an email is received! or you can just
-  :javascript
-    //
-    document.write('<a href="' + permalink + '" target="_new">bookmark it directly</a>');
-    //
-  , or even get an
-  :javascript
-    //
-    document.write('<a href="' + rsslink + '" target="_new">RSS Feed</a>');
-    //
+  %a.inbox{ :href => '#' } bookmark it directly,
+  or even get an
+  %a.rss{ :href => '#' } RSS feed
   of emails coming into the box. It's good for 24 hours, then all mail will be removed.
-:javascript
-//
-setTimeout('startPolling()', interval);
-//

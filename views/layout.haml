@@ -8,6 +8,7 @@
     %title eyepaste.com -&gt; disposable email
     %link{:href => "/favicon.png", :rel => "icon", :type => "image/png"}/
     %link{:href => "/css/ep_styles.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+    %script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
   %body
     #container
       %a{:href => "/"}
@@ -18,25 +19,14 @@
         %ul#topnav
           %li
             %a{:href => "/about.html"} about
-          %li#feedback.navactive
-            %a{:href => "#", :onclick => "toggleFeedback();; return false;"} feedback
           %li
             %a{:href => "javascript:(function(){%20q=document.getSelection();%20if(!q)%20q=prompt('Eyepaste%20Mailbox:');%20if(q)%20location.href='http://www.eyepaste.com/inbox/'+escape(q)+'@eyepaste.com';%20})()"} bookmarklet
       #content
         = yield
-      #prefooter
-        #firefox
-          %a{:href => "http://getfirefox.com/", :target => "_new", :title => "Get Firefox - The Browser, Reloaded."}
-            %img{:alt => "Get Firefox", :border => "0", :height => "15", :src => "http://www.mozilla.org/products/firefox/buttons/firefox_80x15.png", :width => "80"}/
-        #socialbookmarks
-          %a{:href => "http://del.icio.us/post?url=http%3A//www.eyepaste.com&title=eyepaste.com%20%3A%3A%20disposable%20email", :target => "_new"}
-            %img{:alt => "del.icio.us", :src => "/images/delicious.gif"}/
-          %a{:href => "http://digg.com/submit?phase=2&url=http%3A//www.eyepaste.com&title=eyepaste.com%20%3A%3A%20disposable%20email", :target => "_new"}
-            %img{:alt => "digg this", :src => "/images/digg.gif"}/
-          %a{:href => "http://technorati.com/cosmos/search.html?url=http%3A//www.eyepaste.com", :target => "_new"}
-            %img{:alt => "search on technorati", :src => "/images/technorati.gif"}/
-          %a{:href => "http://reddit.com/submit?url=http%3A//www.eyepaste.com&title=eyepaste.com%20%3A%3A%20disposable%20email", :target => "_new"}
-            %img{:alt => "add to reddit", :src => "/images/reddit.gif"}/
+      #pre_footer
+        %a.firefox{:href => "http://getfirefox.com/", :target => "_new", :title => "Get Firefox - The Browser, Reloaded."}
+          %img{:alt => "Get Firefox", :border => "0", :height => "15", :src => "http://www.mozilla.org/products/firefox/buttons/firefox_80x15.png", :width => "80"}/
+        .clear
       #footer
         %p
           brought to you by
