@@ -44,6 +44,8 @@
           //good to go, redirect us:
           stop_polling();
           window.location = inbox_link
+        } else {
+          last_inbox_hash = data.inbox_hash;
         }
       }, 'json');
 
