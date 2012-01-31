@@ -1,0 +1,211 @@
+* {
+margin:0pt;
+padding:0pt;
+}
+
+html, body {
+background:#FFFFFF none repeat scroll 0%;
+font-family:"lucida grande","lucida sans",verdana,sans-serif;
+font-size:12px;
+font-size-adjust:none;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
+line-height:normal;
+}
+
+img {
+border:0pt none;
+}
+
+p {
+	margin:15px 0;
+	text-align:justify;
+}
+
+img#toplogo {
+	float:left;	
+}
+
+h2#tagline {
+	font-style:italic;
+	color:#AAAAAA;
+	padding:50px 0 0;
+}
+
+div#container {
+	width:750px;
+	margin:auto;
+}
+
+div#footer {
+	border-top-style:dotted;
+	border-width:1px;
+	color:#AAAAAA;
+	padding:5px;
+}
+
+div#navcontainer {
+	margin:20px 0 0;
+	clear:left;
+}
+
+div#content {
+	margin:5px 0;
+	padding:15px 0 0 0;
+	border-top-style:dotted;
+	border-width:1px;
+	border-color:#AAAAAA;
+}
+
+div#emailbox {
+	border-style:dashed;
+	border-width:1px;
+	padding:10px;
+	float:right;
+	margin:0 0 5px 15px;
+}
+
+table#email_headers_short {
+	padding: 0px;
+	margin: 0px;
+}
+
+table#email_headers_short td.label {
+	color: #555555;
+	font-weight: bold;
+}
+
+table#email_headers_short td.data {
+	color: #666666;
+	padding: 0 0 0 10px;
+}
+
+div#emailmessage {
+	border-style:dashed;
+	border-width:2px;
+	border-color:#555555;
+	margin: 0 0 10px 0;
+	padding: 15px;
+	background-color:#EEEEEE;
+}
+
+div.fullheaders {
+	border-style:dashed;
+	border-width:1px;
+	border-color:#666666;
+	background-color:#D7E3E3;
+	margin: 5px 0 5px 0;
+	padding: 5px;
+}
+
+div#linkbox {
+	float:right;
+}
+
+div#firefox {
+	float:right;
+	padding:4px 0 0;
+}
+
+div#prefooter {
+	margin:30px 0 0;
+}
+
+div#notcheckingemail {
+	font-weight:bold;
+	color:#CC0000;
+}
+
+ul#topnav {
+	list-style-type:none;
+	white-space:nowrap;	
+}
+
+ul#topnav li {
+	display:inline;
+	padding:5px 5px 4px 5px;
+	text-decoration:none;
+}
+
+.navactive {
+	border-width:0px;
+	background-color:#FFFFFF;
+}
+
+.navinactive {
+	border-width:1px 1px 0px 1px;
+	border-style:dotted;
+	border-color:#000000;
+	background-color:#E3EB97;
+}
+
+div#feedbackcontainer {
+	border-width:1px;
+	padding:10px;
+	border-style:dotted;
+	border-color:#000000;
+	background-color:#E3EB97;
+	text-align:top;
+	font-size:11px;
+	margin-top:3px;
+}
+
+div#feedbackfooter {
+	text-align:right;
+}
+
+table#feedbacktable td {
+	vertical-align:top;
+	padding-left:10px;
+}
+
+table#feedbacktable .input {
+	background-color:#FFFFFF;
+	border:1px solid #666666;
+	color:#777777;
+	padding:1px;
+	margin-bottom:3px;
+	font-size:11px;
+	width:175px;
+}
+
+table#feedbacktable textarea.input {
+	width:350px;
+}
+
+
+input#submit {
+	font-size:11px;
+	border:1px solid #000000;
+	background-color:#EEEEEE;
+	padding:3px;
+	margin-top:10px;
+}
+
+h3 {
+	font-size:14px;
+}
+
+h2 {
+	font-size:18px;
+}
+
+h1 {
+	font-size:22px;
+}
+
+div#footer p {
+	margin-top:0px;
+	text-align:center;
+	font-style:italic;
+}
+
+div#siteerror {
+	margin-top:50px;
+	text-align:center;
+}
+
+div#siteerror h1,h2,h3 {
+	margin:15px 0;
+}

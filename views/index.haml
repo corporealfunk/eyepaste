@@ -1,0 +1,67 @@
+#emailbox
+  %h1
+    :javascript
+      //
+      document.write(email);
+      //
+  #checkingemail
+    %img#bar{:align => "absbottom", :alt => "RSS Feed", :src => "/images/ajax-loader.gif"}/
+    checking for email...
+    %br>/
+    (page will refresh when a message is received)
+  #notcheckingemail{:style => "display: none;"}
+    %p
+      \!! --&gt; we are not checking email automatically because no email has come in for a long time.. the
+      email address is still usable, just check the inbox using the links below. &lt;-- !!
+  %p
+    permalink:
+    :javascript
+      //
+      document.write('<a href="' + permalink + '">' + permalink + '</a>');
+      //
+    %br/
+    :javascript
+      //
+      document.write('<a href="' + rsslink + '"');
+      //
+    %img{:alt => "RSS Feed", :src => "/images/feed-icon-sm.png"}/
+    RSS feed:
+    :javascript
+      //
+      document.write('<a href="' + rsslink + '">' + rsslink + '</a>');
+      //
+%h3 What?
+%p
+  eyepaste.com is a free
+  %a{:href => "http://en.wikipedia.org/wiki/Disposable_e-mail_address", :target => "_new"} disposable email
+  service.
+%h3 Why?
+%p
+  Why does the world need another disposable email service?  Why don't we all just use other ones? The answer is that we don't
+  need one. Really,
+  %b I
+  need one that is as good as
+  %a{:href => "http://2prong.com", :target => "_new"} 2prong.com
+  is/was. Problem is
+  that 2prong.com is not always up and I wanted one that is always (or least usually) up.  So, I took 2prong.com's basic concept
+  (the code was open sourced so i feel like this is ok) and re-created it in
+  %a{:href => "http://symfony-project.org", :target => "_new"} symfony
+  and now we have the glory of eyepaste.
+%h3 How?
+%p A disposable email address has been ready-made for you in the box above.  Use it to sign up for something that requires email address verification but you know they will send you copious amounts of spam... it is too onerous to make a fake email address on gmail or hotmail, or yahoo mail or whatever.
+%p
+  To check your disposable email address, this page will simply refresh automatically when an email is received! or you can just
+  :javascript
+    //
+    document.write('<a href="' + permalink + '" target="_new">bookmark it directly</a>');
+    //
+  , or even get an
+  :javascript
+    //
+    document.write('<a href="' + rsslink + '" target="_new">RSS Feed</a>');
+    //
+  of emails coming into the box. It's good for 24 hours, then all mail will be removed.
+:javascript
+//
+setTimeout('startPolling()', interval);
+//
