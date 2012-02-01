@@ -43,6 +43,13 @@ module Eyepaste
     end
 
 
+    def attributes
+      { :raw_headers => @raw_headers,
+        :decoded_body => @decoded_body,
+        :parts => @parts
+      }
+    end
+
     private
     def _search_parts_keys(matcher)
       parts_key = nil

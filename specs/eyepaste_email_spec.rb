@@ -1,13 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
-
-require File.dirname(__FILE__) + '/../lib/eyepaste/email.rb'
-
-path_to_emails = File.dirname(__FILE__) + '/emails'
-emails = {
-  :plain_text => "#{path_to_emails}/plain_text.eml",
-  :multi_part => "#{path_to_emails}/multi_part.eml"
-}
-
+require File.dirname(__FILE__) + '/email_helper'
 
 describe Eyepaste::Email do
   describe "#parse_raw_email" do
@@ -17,7 +9,7 @@ describe Eyepaste::Email do
 
     context "a plain text email" do
       let(:email_content) do
-        File.open(emails[:plain_text], 'rb') { |f| f.read }
+        File.open(EMAILS[:plain_text], 'rb') { |f| f.read }
       end
 
       before(:each) do
@@ -39,7 +31,7 @@ describe Eyepaste::Email do
 
     context "a multi part email" do
       let(:email_content) do
-        File.open(emails[:multi_part], 'rb') { |f| f.read }
+        File.open(EMAILS[:multi_part], 'rb') { |f| f.read }
       end
 
       before(:each) do
@@ -60,6 +52,32 @@ describe Eyepaste::Email do
         @email.html.should_not be_nil
         @email.html.should =~ /href=/
       end
+    end
+  end
+
+  describe "#attributes" do
+    let(:email_content) do
+      File.open(EMAILS[:plain_text], 'rb') { |f| f.read }
+    end
+
+    before(:each) do
+      @email = Eyepaste::Email.parse_raw_email(email_content)
+    end
+
+    it "returns all the attributes in a hash" do
+      @email.attributes.should be_kind_of(Hash)
+    end
+
+    it "returns the raw_headers correctly" do
+      @email.attributes[:raw_headers].should == @email.raw_headers
+    end
+
+    it "returns the decoded_body correctly" do
+      @email.attributes[:decoded_body].should == @email.decoded_body
+    end
+
+    it "returns the parts correctly" do
+      @email.attributes[:parts].should == @email.parts
     end
   end
 end

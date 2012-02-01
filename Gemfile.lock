@@ -15,6 +15,7 @@ GEM
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
+    redis (2.2.2)
     rspec (2.7.0)
       rspec-core (~> 2.7.0)
       rspec-expectations (~> 2.7.0)
@@ -40,5 +41,6 @@ DEPENDENCIES
   mail
   rack
   rack-test
+  redis
   rspec
   sinatra
