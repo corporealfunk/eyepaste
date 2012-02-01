@@ -1,5 +1,7 @@
+require 'sinatra'
+
 module Eyepaste
-  class App < Sinatra::Base
+  class App < ::Sinatra::Base
     get "/" do
       haml :index
     end

@@ -1,19 +1,44 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    diff-lcs (1.1.3)
     haml (3.1.3)
+    i18n (0.6.0)
+    mail (2.3.0)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    mime-types (1.17.2)
+    polyglot (0.3.3)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
+    rack-test (0.6.1)
+      rack (>= 1.0)
+    rspec (2.7.0)
+      rspec-core (~> 2.7.0)
+      rspec-expectations (~> 2.7.0)
+      rspec-mocks (~> 2.7.0)
+    rspec-core (2.7.1)
+    rspec-expectations (2.7.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.7.0)
     sinatra (1.3.2)
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
     tilt (1.3.3)
+    treetop (1.4.10)
+      polyglot
+      polyglot (>= 0.3.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   haml
+  mail
+  rack
+  rack-test
+  rspec
   sinatra
