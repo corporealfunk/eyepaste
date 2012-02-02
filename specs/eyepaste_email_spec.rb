@@ -80,4 +80,36 @@ describe Eyepaste::Email do
       @email.attributes[:parts].should == @email.parts
     end
   end
+
+  describe "#initialize" do
+    context "attributes passed as symbols as keys" do
+      it "sets attributes internally" do
+        email = Eyepaste::Email.new(:raw_headers => 'headers',
+                                    :decoded_body => 'body',
+                                    :parts => {
+                                      :plain => 'plain',
+                                      :html => 'html' }
+                                   )
+        email.raw_headers.should == 'headers'
+        email.decoded_body.should == 'body'
+        email.parts[:plain].should == 'plain'
+        email.parts[:html].should == 'html'
+      end
+    end
+
+    context "attributes passed as symbols as strings" do
+      it "sets attributes internally" do
+        email = Eyepaste::Email.new('raw_headers' => 'headers',
+                                    'decoded_body' => 'body',
+                                    'parts' => {
+                                      'plain' => 'plain',
+                                      'html' => 'html' }
+                                   )
+        email.raw_headers.should == 'headers'
+        email.decoded_body.should == 'body'
+        email.parts['plain'].should == 'plain'
+        email.parts['html'].should == 'html'
+      end
+    end
+  end
 end

@@ -20,6 +20,8 @@ describe Eyepaste::Storage::Redis do
     emails
   end
 
+  # to test your own storage engine, change the each block below
+  # to construct your own storage engine
   before(:each) do
     # clean the keys:
     redis.flushdb
@@ -27,9 +29,10 @@ describe Eyepaste::Storage::Redis do
   end
 
   describe "#append_email" do
-    it "returns true" do
-      @storage.append_email('test@eyepaste.com', 'dumb value').should == true
+    it "returns 1" do
+      @storage.append_email('test@eyepaste.com', Eyepaste::Email.new).should == 1
     end
+
   end
 
   describe "#get_inbox" do
@@ -49,5 +52,15 @@ describe Eyepaste::Storage::Redis do
       end
 
     end
+
+    context "emails have not been added to the inbox" do
+      it "returns empty array" do
+        @storage.get_inbox('test@eyepaste.com').should == []
+      end
+    end
+  end
+
+  describe "#expire_emails_before" do
+    it "deletes emails created before the given timestamp"
   end
 end

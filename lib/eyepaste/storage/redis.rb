@@ -1,3 +1,5 @@
+require 'json'
+
 module Eyepaste
   module Storage
     # TODO: passwords, users, databases
@@ -7,13 +9,20 @@ module Eyepaste
         @redis = redis
       end
 
-
       def append_email(inbox, email)
-        true
+        attributes = email.attributes
+        attributes[:created_at] = Time.now.utc.to_i
+        @redis.rpush(inbox, attributes.to_json)
       end
 
       def get_inbox(inbox)
-        [Eyepaste::Email.new]
+        len = @redis.llen(inbox)
+        emails = []
+        items = @redis.lrange(inbox, 0, len - 1)
+        items.each do |item|
+          emails << Eyepaste::Email.new(JSON.parse(item))
+        end
+        emails
       end
 
     end

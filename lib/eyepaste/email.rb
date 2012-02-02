@@ -3,8 +3,10 @@ module Eyepaste
     attr_accessor :raw_headers, :decoded_body, :parts
 
 
-    def initialize
-      @parts = {}
+    def initialize(options = {})
+      @raw_headers = options[:raw_headers] || options['raw_headers']
+      @decoded_body = options[:decoded_body] || options['decoded_body']
+      @parts = options[:parts] || options['parts'] || {}
     end
 
 
