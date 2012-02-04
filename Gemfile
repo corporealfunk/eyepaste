@@ -10,3 +10,4 @@ gem "redis"
 # only for testing
 gem "rspec"
 gem "rack-test"
+gem "timecop"

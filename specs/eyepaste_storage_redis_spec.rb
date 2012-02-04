@@ -24,13 +24,22 @@ describe Eyepaste::Storage::Redis do
   # to construct your own storage engine
   before(:each) do
     # clean the keys:
-    redis.flushdb
     @storage = Eyepaste::Storage::Redis.new(redis)
+    @storage.delete_all
+  end
+
+  describe "#delete_all" do
+    it "removes all emails from storage" do
+      @storage.append_email('test@eyepaste.com', Eyepaste::Email.new)
+      @storage.count_emails.should == 1
+      @storage.delete_all
+      @storage.count_emails.should == 0
+    end
   end
 
   describe "#append_email" do
-    it "returns 1" do
-      @storage.append_email('test@eyepaste.com', Eyepaste::Email.new).should == 1
+    it "returns true" do
+      @storage.append_email('test@eyepaste.com', Eyepaste::Email.new).should == true
     end
 
   end
@@ -60,7 +69,31 @@ describe Eyepaste::Storage::Redis do
     end
   end
 
+  describe "#count_emails" do
+    context "no emails have been stored" do
+      it "returns 0 emails have been stored" do
+        @storage.count_emails.should == 0
+      end
+    end
+
+    context "emails have been stored" do
+      it "returns that 1 email has been stored" do
+        @storage.append_email('test@eyepaste.com', emails[:plain_text])
+        @storage.count_emails.should == 1
+      end
+    end
+  end
+
   describe "#expire_emails_before" do
-    it "deletes emails created before the given timestamp"
+    it "deletes emails created before the given timestamp" do
+      Timecop.freeze(Time.now.utc - 600) do
+        @storage.append_email('test@eyepaste.com', emails[:plain_text])
+      end
+      Timecop.freeze(Time.now.utc - 300) do
+        @storage.append_email('bob@eyepaste.com', emails[:plain_text])
+      end
+      @storage.expire_emails_before(Time.now.utc - 300)
+      @storage.count_emails.should == 1
+    end
   end
 end
