@@ -42,6 +42,12 @@ describe Eyepaste::Storage::Redis do
       @storage.append_email('test@eyepaste.com', Eyepaste::Email.new).should == true
     end
 
+    context "strange utf8 characters being stored" do
+      it "returns true" do
+        @storage.append_email('test@eyepaste.com', emails[:multi_part]).should == true
+      end
+    end
+
   end
 
   describe "#get_inbox" do

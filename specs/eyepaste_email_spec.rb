@@ -1,3 +1,5 @@
+require 'json'
+
 require File.dirname(__FILE__) + '/spec_helper'
 require File.dirname(__FILE__) + '/email_helper'
 
@@ -9,7 +11,7 @@ describe Eyepaste::Email do
 
     context "a plain text email" do
       let(:email_content) do
-        File.open(EMAILS[:plain_text], 'rb') { |f| f.read }
+        File.open(EMAILS[:plain_text], 'r+b') { |f| f.read }
       end
 
       before(:each) do
@@ -51,6 +53,10 @@ describe Eyepaste::Email do
       it "returns the html text part of the body" do
         @email.html.should_not be_nil
         @email.html.should =~ /href=/
+      end
+
+      it "can encode the attributes as json" do
+        @email.attributes.to_json.should be_kind_of(String)
       end
     end
   end

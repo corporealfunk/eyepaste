@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + '/email.rb'
 # the storage factory allows you to write any storage
 # backend you like, as long as it adheres to the storage
 # interface. Once you have a a storage engine/class written,

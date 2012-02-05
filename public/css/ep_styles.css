@@ -82,7 +82,7 @@ table#email_headers_short td.data {
   padding: 0 0 0 10px;
 }
 
-div#emailmessage {
+div.emailmessage {
   border-style:dashed;
   border-width:2px;
   border-color:#555555;
@@ -170,4 +170,9 @@ div#siteerror h1,h2,h3 {
 
 .clear {
   clear:both;
+}
+
+.linkbox {
+  float:right;
+  margin-top: -37px;
 }

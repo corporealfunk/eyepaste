@@ -5,9 +5,11 @@
   var counter = 0;
   var interval_id = null;
   var last_inbox_hash = null;
+  var domain=$('#emailbox').attr('data-domain');
+  var port=$('#emailbox').attr('data-port');
+  port = (port == '80' || port == '443') ? '' : ':' + port;
 
   var generate_email = function() {
-    var domain='eyepaste.com';
     var string_length = 5;
 
     var chars = "0123456789abcdefghiklmnopqrstuvwxyz";
@@ -22,7 +24,7 @@
 
   var email = generate_email();
 
-  var inbox_link = 'http://eyepaste.com/inbox/' + escape(email);
+  var inbox_link = 'http://' + domain + port + '/inbox/' + escape(email);
   var rss_link = inbox_link + '.rss'
   var poll_link = '/inbox/' + escape(email) + '.json'
 

@@ -25,7 +25,7 @@ module Eyepaste
         keys = mail.parts.map { |part| part.content_type }
         vals = mail.parts.map { |part| part.body.decoded }
         keys.zip(vals).each do |part|
-          email.parts[part[0]] = part[1]
+          email.parts[part[0]] = part[1].force_encoding Encoding::UTF_8
         end
       end
 

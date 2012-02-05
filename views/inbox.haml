@@ -1,0 +1,32 @@
+.linkbox
+  %img{ :src => '/images/feed-icon-sm.png' }
+  %a{ :href => "/inbox/#{@inbox}.rss" } RSS feed
+  %a{ :href => "/inbox/#{@inbox}" } permalink
+
+- if @emails.count == 0
+  %h3
+    no emails found for
+    = @inbox
+    \:(
+
+  %p
+    this page doesn't auto-refresh to check for new emails, so you're gonna have to do that by hand to see if new ones came in.
+
+  %p
+    if you don't wanna keep checking back by hand, you can always use that little RSS feed link up there and add it to your reader or smart links or whatever
+
+  %p
+    if you hit the back button on your browser you are going to be given a new disposable email address, so I wouldn't do that unless you don't care or have already bookmarked this page or used the RSS magic
+- else
+  %h3
+    emails for
+    = @inbox
+    \:)
+  - coder = HTMLEntities.new
+  - @emails.each do |email|
+    .emailmessage
+      .headers_short
+      .fullheaders
+        = coder.encode(email.raw_headers).gsub(/\n/, '<br/>')
+      .body_raw
+        = coder.encode(email.decoded_body).gsub(/\n/, '<br/>')
