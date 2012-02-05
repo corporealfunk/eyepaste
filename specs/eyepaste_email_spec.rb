@@ -10,12 +10,17 @@ describe Eyepaste::Email do
     end
 
     context "a plain text email" do
-      let(:email_content) do
+      let(:email_plain_content) do
         File.open(EMAILS[:plain_text], 'r+b') { |f| f.read }
       end
 
+      let(:email_multipart_content) do
+        File.open(EMAILS[:multi_part], 'r+b') { |f| f.read }
+      end
+
       before(:each) do
-        @email = Eyepaste::Email.parse_raw_email(email_content)
+        @email = Eyepaste::Email.parse_raw_email(email_plain_content)
+        @email_multi_part = Eyepaste::Email.parse_raw_email(email_multipart_content)
       end
 
       it "sets the raw_header attribute" do
@@ -28,6 +33,18 @@ describe Eyepaste::Email do
 
       it "has no parts" do
         @email.parts.count.should == 0
+      end
+
+      context "plain email" do
+        it "returns the email header to: field" do
+          @email.to.to_s.should == "notarealaddress@gmail.com"
+        end
+      end
+
+      context "multi part email" do
+        it "returns the email header to: field" do
+          @email_multi_part.to.to_s.should == "notarealaddress@gmail.com"
+        end
       end
     end
 
@@ -85,6 +102,10 @@ describe Eyepaste::Email do
     it "returns the parts correctly" do
       @email.attributes[:parts].should == @email.parts
     end
+
+    it "returns the to correctly" do
+      @email.attributes[:to].should == @email.to
+    end
   end
 
   describe "#initialize" do
@@ -92,6 +113,7 @@ describe Eyepaste::Email do
       it "sets attributes internally" do
         email = Eyepaste::Email.new(:raw_headers => 'headers',
                                     :decoded_body => 'body',
+                                    :to => 'me@me.com',
                                     :parts => {
                                       :plain => 'plain',
                                       :html => 'html' }
@@ -100,6 +122,7 @@ describe Eyepaste::Email do
         email.decoded_body.should == 'body'
         email.parts[:plain].should == 'plain'
         email.parts[:html].should == 'html'
+        email.to.should == 'me@me.com'
       end
     end
 
@@ -107,6 +130,7 @@ describe Eyepaste::Email do
       it "sets attributes internally" do
         email = Eyepaste::Email.new('raw_headers' => 'headers',
                                     'decoded_body' => 'body',
+                                    'to' => 'me@me.com',
                                     'parts' => {
                                       'plain' => 'plain',
                                       'html' => 'html' }
@@ -115,6 +139,7 @@ describe Eyepaste::Email do
         email.decoded_body.should == 'body'
         email.parts['plain'].should == 'plain'
         email.parts['html'].should == 'html'
+        email.to.should == 'me@me.com'
       end
     end
   end

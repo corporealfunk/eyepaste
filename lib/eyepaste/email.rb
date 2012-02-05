@@ -1,12 +1,13 @@
 module Eyepaste
   class Email
-    attr_accessor :raw_headers, :decoded_body, :parts
+    attr_accessor :raw_headers, :decoded_body, :parts, :to
 
 
     def initialize(options = {})
       @raw_headers = options[:raw_headers] || options['raw_headers']
       @decoded_body = options[:decoded_body] || options['decoded_body']
       @parts = options[:parts] || options['parts'] || {}
+      @to = options[:to] || options['to'] || {}
     end
 
 
@@ -17,6 +18,15 @@ module Eyepaste
       mail = Mail.new(content)
       email.raw_headers = mail.header.raw_source
       email.decoded_body = mail.body.decoded
+      email.to = mail.header[:to].to_s
+
+      # if the to filed contains something between <> pull that out:
+      if email.to.match(/<(.+?)>/)
+        to_parts = email.to.match(/<(.+?)>/)
+        if to_parts.length == 2
+          email.to = to_parts[1]
+        end
+      end
 
       # if multipart, set our parts hash so that the
       # keys are the content types and the values are the
@@ -48,7 +58,8 @@ module Eyepaste
     def attributes
       { :raw_headers => @raw_headers,
         :decoded_body => @decoded_body,
-        :parts => @parts
+        :parts => @parts,
+        :to => @to
       }
     end
 
