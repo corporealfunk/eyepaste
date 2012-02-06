@@ -21,6 +21,6 @@ end
 
 begin
   storage.append_email(email.to, email)
-rescue Encoding::UndefinedConversionError => e
+rescue NoMethodError, Encoding::UndefinedConversionError => e
   LOGGER.warn "#{e.class}: #{e.message}:\n#{content}"
 end
