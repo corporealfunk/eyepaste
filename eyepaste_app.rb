@@ -19,7 +19,7 @@ module Eyepaste
       @inbox = params[:captures].first
       @emails = storage.get_inbox("#{params[:captures].first}")
       host = request.host
-      port_with_colon = (request.port == '80' || request.port == '443') ? '' : ":#{request.port}"
+      port_with_colon = (request.port.to_s == '80' || request.port.to_s == '443') ? '' : ":#{request.port}"
       @host_with_port = "#{host}#{port_with_colon}"
 
       case params[:captures][1]
