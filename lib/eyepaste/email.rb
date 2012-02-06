@@ -1,12 +1,11 @@
 module Eyepaste
   class Email
-    attr_accessor :raw_headers, :decoded_body, :parts, :to, :from, :date, :subject
+    attr_accessor :raw_headers, :decoded_body, :to, :from, :date, :subject
 
 
     def initialize(options = {})
       @raw_headers = options[:raw_headers] || options['raw_headers']
       @decoded_body = options[:decoded_body] || options['decoded_body']
-      @parts = options[:parts] || options['parts'] || {}
       @to = options[:to] || options['to'] || nil
       @from = options[:from] || options['from'] || nil
       @date = options[:date] || options['date'] || nil
@@ -34,28 +33,11 @@ module Eyepaste
         end
       end
 
-      # if multipart, set our parts hash so that the
-      # keys are the content types and the values are the
-      # decoded bodies
+      # see if we have charsets in our parts to
+      # use for encoding the body later:
       charsets = []
-      if mail.multipart?
-        mail.parts.each do |part|
-          content_type = part.content_type
-          body = part.body.decoded
-          charset = part.charset
-          charsets << charset
-
-          # NOTE: the following charset conversions seem to be due to the fact that
-          # the mail gem is not very smart re:charsets. we have to detect and
-          # encode on our own if we can
-          if charset && !charset.empty?
-            email.parts[content_type] = body.encode('UTF-8', charset)
-          else
-            email.parts[content_type] = body.force_encoding(Encoding::UTF_8)
-          end
-        end
-        charsets.uniq!
-      end
+      mail.parts.each { |part| charsets << part.charset } if mail.multipart?
+      charsets.uniq!
 
       # NOTE: the following charset conversions seem to be due to the fact that
       # the mail gem is not very smart re:charsets. we have to detect and
@@ -89,7 +71,6 @@ module Eyepaste
     def attributes
       { :raw_headers => @raw_headers,
         :decoded_body => @decoded_body,
-        :parts => @parts,
         :to => @to,
         :from => @from,
         :date => @date,

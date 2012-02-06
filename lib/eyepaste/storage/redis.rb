@@ -17,8 +17,8 @@ module Eyepaste
         emails = []
         inbox_keys = @redis.keys("email:#{inbox}_*")
         inbox_keys.sort.each do |key|
-          from_storage = @redis.mapped_hmget(key, *_storage_hash_keys)
-          emails << Eyepaste::Email.new(JSON.parse(from_storage[:object]))
+          from_storage = @redis.mapped_hmget(key, *_storage_hash_keys(Eyepaste::Email.new.attributes.keys))
+          emails << Eyepaste::Email.new(from_storage)
         end
         emails
       end
@@ -49,14 +49,13 @@ module Eyepaste
       end
 
       def _storage_hash(email_attributes)
-        {
-          :object => email_attributes.to_json,
+        email_attributes.merge({
           :created_at => Time.now.utc.to_i.to_s
-        }
+        })
       end
 
-      def _storage_hash_keys
-        [:object, :created_at]
+      def _storage_hash_keys(attribute_keys)
+        attribute_keys << :created_at
       end
 
     end
