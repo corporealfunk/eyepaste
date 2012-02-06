@@ -37,12 +37,37 @@ module Eyepaste
       # if multipart, set our parts hash so that the
       # keys are the content types and the values are the
       # decoded bodies
+      charsets = []
       if mail.multipart?
-        keys = mail.parts.map { |part| part.content_type }
-        vals = mail.parts.map { |part| part.body.decoded }
-        keys.zip(vals).each do |part|
-          email.parts[part[0]] = part[1].force_encoding Encoding::UTF_8
+        mail.parts.each do |part|
+          content_type = part.content_type
+          body = part.body.decoded
+          charset = part.charset
+          charsets << charset
+
+          # NOTE: the following charset conversions seem to be due to the fact that
+          # the mail gem is not very smart re:charsets. we have to detect and
+          # encode on our own if we can
+          if charset && !charset.empty?
+            email.parts[content_type] = body.encode('UTF-8', charset)
+          else
+            email.parts[content_type] = body.force_encoding(Encoding::UTF_8)
+          end
         end
+        charsets.uniq!
+      end
+
+      # NOTE: the following charset conversions seem to be due to the fact that
+      # the mail gem is not very smart re:charsets. we have to detect and
+      # encode on our own if we can
+
+      # if our email is in a charset, convert the decoded body to that
+      # else, use the charsets as computed above from the parts
+      if mail.charset && !mail.charset.empty?
+        email.decoded_body = email.decoded_body.encode('UTF-8', mail.charset)
+      else
+        # no mail.charset present, do we have a charsets Array of 1?
+        email.decoded_body = email.decoded_body.encode('UTF-8', charsets[0]) if charsets.length == 1
       end
 
       email

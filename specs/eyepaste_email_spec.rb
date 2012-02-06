@@ -94,6 +94,28 @@ describe Eyepaste::Email do
     end
   end
 
+  context "an encoding problematic email when multipart" do
+    let(:email_content) do
+      File.open(EMAILS[:encoding_problem], 'rb') { |f| f.read }
+    end
+
+    it "can encode the attributes as json" do
+      @email = Eyepaste::Email.parse_raw_email(email_content)
+      @email.attributes.to_json.should be_kind_of(String)
+    end
+  end
+
+  context "an encoding problematic email when single part" do
+    let(:email_content) do
+      File.open(EMAILS[:xd3_conversion], 'rb') { |f| f.read }
+    end
+
+    it "can encode the attributes as json" do
+      @email = Eyepaste::Email.parse_raw_email(email_content)
+      @email.attributes.to_json.should be_kind_of(String)
+    end
+  end
+
   describe "#attributes" do
     let(:email_content) do
       File.open(EMAILS[:plain_text], 'rb') { |f| f.read }
