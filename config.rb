@@ -8,8 +8,17 @@ Eyepaste::Storage.set_factory do
 end
 
 # configure the logger:
+log_file = File.dirname(__FILE__) + '/logs/eyepaste.log'
 LOGGER = Logging.logger['eyepaste_log']
 LOGGER.add_appenders(
-  Logging.appenders.file(File.dirname(__FILE__) + '/logs/eyepaste.log')
+  Logging.appenders.file(log_file)
 )
 LOGGER.level = :info
+
+# touch log file and make it world writeable if it does not exist:
+if !File.exist?(log_file)
+  FileUtils.touch(log_file)
+
+  # world writable:
+  FileUtils.chmod(0666, log_file)
+end
