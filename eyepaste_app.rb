@@ -27,6 +27,9 @@ module Eyepaste
         haml :inbox
       when ".rss"
         haml :inbox_rss, :layout => false, :content_type => 'application/rss+xml'
+      when ".json"
+        content_type 'application/json', :charset => 'utf-8'
+        {:count => @emails.length}.to_json
       end
     end
 

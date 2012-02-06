@@ -4,7 +4,7 @@
   var max_tries = 12*15; //15 minutes
   var counter = 0;
   var interval_id = null;
-  var last_inbox_hash = null;
+  var last_inbox_count = 0;
   var domain=$('#emailbox').attr('data-domain');
   var port=$('#emailbox').attr('data-port');
   port = (port == '80' || port == '443') ? '' : ':' + port;
@@ -41,13 +41,13 @@
   var poll = function() {
     counter++;
     if (counter < max_tries) {
-      $.get(poll_link, {}, function(data) {
-        if (last_inbox_hash && data.inbox_hash != last_inbox_hash) {
+      $.get(poll_link, {}, function(inbox) {
+        if (inbox.count != last_inbox_count) {
           //good to go, redirect us:
           stop_polling();
           window.location = inbox_link
         } else {
-          last_inbox_hash = data.inbox_hash;
+          last_inbox_count = inbox.count;
         }
       }, 'json');
 

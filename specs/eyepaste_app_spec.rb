@@ -101,6 +101,22 @@ describe 'Eyepaste Site' do
 
   end
 
+  describe '/inbox/jjm@eyepaste.com.json' do
+    it "returns a content type for JSON" do
+      get '/inbox/jjm@eyepaste.com.json'
+      last_response.content_type.should =~ /application\/json/
+    end
+
+    it "contains the count of emails" do
+      storage.append_email('jjm@eyepaste.com', emails[:multi_part])
+      storage.append_email('jjm@eyepaste.com', emails[:plain_text])
+
+      get '/inbox/jjm@eyepaste.com.json'
+      last_response.should =~ /"count":2/
+    end
+
+  end
+
   describe '404 not found' do
     it "display our custom 404 page" do
       get '/fakepagenotreal'
