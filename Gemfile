@@ -3,7 +3,6 @@ gem "sinatra", :require => "sinatra/base"
 gem "haml"
 gem "mail"
 gem "rack"
-gem "htmlentities"
 
 # storage backend is:
 gem "redis"

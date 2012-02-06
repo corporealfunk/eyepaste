@@ -1,13 +1,16 @@
 module Eyepaste
   class Email
-    attr_accessor :raw_headers, :decoded_body, :parts, :to
+    attr_accessor :raw_headers, :decoded_body, :parts, :to, :from, :date, :subject
 
 
     def initialize(options = {})
       @raw_headers = options[:raw_headers] || options['raw_headers']
       @decoded_body = options[:decoded_body] || options['decoded_body']
       @parts = options[:parts] || options['parts'] || {}
-      @to = options[:to] || options['to'] || {}
+      @to = options[:to] || options['to'] || nil
+      @from = options[:from] || options['from'] || nil
+      @date = options[:date] || options['date'] || nil
+      @subject = options[:subject] || options['subject'] || nil
     end
 
 
@@ -19,6 +22,9 @@ module Eyepaste
       email.raw_headers = mail.header.raw_source
       email.decoded_body = mail.body.decoded
       email.to = mail.header[:to].to_s
+      email.from = mail.header[:from].to_s
+      email.date = mail.header[:date].to_s
+      email.subject = mail.header[:subject].to_s
 
       # if the to filed contains something between <> pull that out:
       if email.to.match(/<(.+?)>/)
@@ -59,7 +65,10 @@ module Eyepaste
       { :raw_headers => @raw_headers,
         :decoded_body => @decoded_body,
         :parts => @parts,
-        :to => @to
+        :to => @to,
+        :from => @from,
+        :date => @date,
+        :subject => @subject
       }
     end
 

@@ -1,0 +1,44 @@
+!!! XML
+%rss{:version => "2.0"}
+  %channel
+    %title
+      = @inbox
+      mailbox feed on
+      = @host_with_port
+    %link
+      = "http://#{@host_with_port}"
+    %description
+      this is a feed of email coming into the mailbox
+      = @inbox
+      on
+      = "#{@host_with_port}"
+      it's a disposable email system, so these emails will drop off after 24 hours. it's also very public, as you can see.
+    %language en-us
+    %pubdate
+      = Time.now.utc.rfc2822
+    %lastbuilddate
+      = Time.now.utc.rfc2822
+    - @emails.each do |email|
+      %item
+        %title
+          :cdata
+            #{email.from}: #{email.subject}
+        %link
+          = "http://#{@host_with_port}/inbox/#{@inbox}"
+        %description
+          :cdata
+            <p>
+              From: #{email.from}
+              <br/>
+              To: #{email.to}
+              <br/>
+              Subject: #{email.subject}
+              <br/>
+              Date: #{email.date}
+              <br/>
+            </p>
+            <p>
+              #{email.decoded_body.gsub(/\n/, '<br/>')}
+            </p>
+        %pubdate
+          = email.date

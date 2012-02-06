@@ -14,16 +14,29 @@ module Eyepaste
       haml :about
     end
 
-    get %r{/inbox/(.+)(\.rss)?} do
+    get %r{^/inbox/(.*?)(\.rss|\.json)?$} do
       storage = Eyepaste::Storage.factory
       @inbox = params[:captures].first
       @emails = storage.get_inbox("#{params[:captures].first}")
+      host = request.host
+      port_with_colon = (request.port == '80' || request.port == '443') ? '' : ":#{request.port}"
+      @host_with_port = "#{host}#{port_with_colon}"
 
-      haml :inbox
+      case params[:captures][1]
+      when nil
+        haml :inbox
+      when ".rss"
+        haml :inbox_rss, :layout => false, :content_type => 'application/rss+xml'
+      end
     end
 
     not_found do
       haml :error_404, :layout => false
+    end
+
+    helpers do
+      include Rack::Utils
+      alias_method :h, :escape_html
     end
   end
 end

@@ -22,11 +22,27 @@
     emails for
     = @inbox
     \:)
-  - coder = HTMLEntities.new
   - @emails.each do |email|
     .emailmessage
-      .headers_short
+      %table#headers_short
+        %tr
+          %th To:
+          %td= h(email.to)
+        %tr
+          %th From:
+          %td= h(email.from)
+        %tr
+          %th Date:
+          %td= h(email.date)
+        %tr
+          %th Subject:
+          %td= h(email.subject)
+        %tr
+          %th
+          %td
+            %a.extended_headers{ :href => '#' } view full headers
       .fullheaders
-        = coder.encode(email.raw_headers).gsub(/\n/, '<br/>')
+        = h(email.raw_headers).gsub(/\n/, '<br/>')
       .body_raw
-        = coder.encode(email.decoded_body).gsub(/\n/, '<br/>')
+        = h(email.decoded_body).gsub(/\n/, '<br/>')
+%script{:type => "text/javascript", :src => "/js/inbox.js"}

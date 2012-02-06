@@ -75,6 +75,32 @@ describe 'Eyepaste Site' do
     end
   end
 
+  describe '/inbox/jjm@eyepaste.com.rss' do
+    it "returns a content type for RSS" do
+      get '/inbox/jjm@eyepaste.com.rss'
+      last_response.content_type.should =~ /application\/rss\+xml/
+    end
+
+    context "emails present in the inbox" do
+      it "contains an item" do
+        storage.append_email('jjm@eyepaste.com', emails[:multi_part])
+        storage.append_email('jjm@eyepaste.com', emails[:plain_text])
+
+        get '/inbox/jjm@eyepaste.com.rss'
+        last_response.should =~ /item/
+        last_response.should =~ /Airbnb/
+      end
+    end
+
+    context "no emails present in the inbox" do
+      it "does not contain an item" do
+        get '/inbox/jjm@eyepaste.com.rss'
+        last_response.should_not =~ /item/
+      end
+    end
+
+  end
+
   describe '404 not found' do
     it "display our custom 404 page" do
       get '/fakepagenotreal'

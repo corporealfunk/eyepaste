@@ -67,17 +67,18 @@ div#emailbox {
   margin:0 0 5px 15px;
 }
 
-table#email_headers_short {
+table#headers_short {
   padding: 0px;
   margin: 0px;
 }
 
-table#email_headers_short td.label {
+table#headers_short th {
   color: #555555;
   font-weight: bold;
+  text-align: right;
 }
 
-table#email_headers_short td.data {
+table#headers_short td {
   color: #666666;
   padding: 0 0 0 10px;
 }
@@ -96,8 +97,13 @@ div.fullheaders {
   border-width:1px;
   border-color:#666666;
   background-color:#D7E3E3;
-  margin: 5px 0 5px 0;
+  margin: 5px 0;
   padding: 5px;
+  display: none;
+}
+
+.body_raw {
+  margin: 10px 0;
 }
 
 div#linkbox {

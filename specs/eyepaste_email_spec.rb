@@ -20,7 +20,6 @@ describe Eyepaste::Email do
 
       before(:each) do
         @email = Eyepaste::Email.parse_raw_email(email_plain_content)
-        @email_multi_part = Eyepaste::Email.parse_raw_email(email_multipart_content)
       end
 
       it "sets the raw_header attribute" do
@@ -35,16 +34,20 @@ describe Eyepaste::Email do
         @email.parts.count.should == 0
       end
 
-      context "plain email" do
-        it "returns the email header to: field" do
-          @email.to.to_s.should == "notarealaddress@gmail.com"
-        end
+      it "returns the email header to: field" do
+        @email.to.to_s.should == "notarealaddress@gmail.com"
       end
 
-      context "multi part email" do
-        it "returns the email header to: field" do
-          @email_multi_part.to.to_s.should == "notarealaddress@gmail.com"
-        end
+      it "returns the email header from: field" do
+        @email.from.to_s.should == 'Linode Alerts <noreply@linode.com>'
+      end
+
+      it "sets the date attribute" do
+        @email.date.should == 'Tue, 31 Jan 2012 08:22:43 -0500'
+      end
+
+      it "sets the subject attribute" do
+        @email.subject.should == 'Linode Alert - CPU Usage - ubuntu (linode411)'
       end
     end
 
@@ -61,6 +64,10 @@ describe Eyepaste::Email do
         @email.parts.count.should == 2
       end
 
+      it "returns the email header to: field" do
+        @email.to.to_s.should == "notarealaddress@gmail.com"
+      end
+
       it "returns the plain text part of the body" do
         @email.plain_text.should_not be_nil
         @email.plain_text.should_not =~ /href=/
@@ -75,6 +82,15 @@ describe Eyepaste::Email do
       it "can encode the attributes as json" do
         @email.attributes.to_json.should be_kind_of(String)
       end
+
+      it "sets the date attribute" do
+        @email.date.should == 'Wed, 01 Feb 2012 05:33:49 +1100'
+      end
+
+      it "returns the email header from: field" do
+        @email.from.to_s.should == 'Airbnb <automated@airbnb.com>'
+      end
+
     end
   end
 
@@ -106,6 +122,18 @@ describe Eyepaste::Email do
     it "returns the to correctly" do
       @email.attributes[:to].should == @email.to
     end
+
+    it "returns the date correctly" do
+      @email.attributes[:date].should == @email.date
+    end
+
+    it "returns the subject correctly" do
+      @email.attributes[:subject].should == @email.subject
+    end
+
+    it "returns the from correctly" do
+      @email.attributes[:from].should == @email.from
+    end
   end
 
   describe "#initialize" do
@@ -114,6 +142,9 @@ describe Eyepaste::Email do
         email = Eyepaste::Email.new(:raw_headers => 'headers',
                                     :decoded_body => 'body',
                                     :to => 'me@me.com',
+                                    :from => 'you@you.com',
+                                    :date => 'Wed, 01 Feb 2012 05:33:49 +1100',
+                                    :subject => 'my subject',
                                     :parts => {
                                       :plain => 'plain',
                                       :html => 'html' }
@@ -123,6 +154,9 @@ describe Eyepaste::Email do
         email.parts[:plain].should == 'plain'
         email.parts[:html].should == 'html'
         email.to.should == 'me@me.com'
+        email.from.should == 'you@you.com'
+        email.date.should == 'Wed, 01 Feb 2012 05:33:49 +1100'
+        email.subject.should == 'my subject'
       end
     end
 
@@ -131,6 +165,9 @@ describe Eyepaste::Email do
         email = Eyepaste::Email.new('raw_headers' => 'headers',
                                     'decoded_body' => 'body',
                                     'to' => 'me@me.com',
+                                    'from' => 'you@you.com',
+                                    'date' => 'Wed, 01 Feb 2012 05:33:49 +1100',
+                                    'subject' => 'my subject',
                                     'parts' => {
                                       'plain' => 'plain',
                                       'html' => 'html' }
@@ -140,6 +177,9 @@ describe Eyepaste::Email do
         email.parts['plain'].should == 'plain'
         email.parts['html'].should == 'html'
         email.to.should == 'me@me.com'
+        email.from.should == 'you@you.com'
+        email.date.should == 'Wed, 01 Feb 2012 05:33:49 +1100'
+        email.subject.should == 'my subject'
       end
     end
   end
