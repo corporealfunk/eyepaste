@@ -1,3 +1,6 @@
+# This script reads from stdin raw emails coming off your
+# delivery agent and places them in Eyepaste storage
+
 require 'rubygems'
 require 'bundler/setup'
 
@@ -5,7 +8,6 @@ Bundler.require
 
 require File.expand_path(File.dirname(__FILE__) + '/../config.rb')
 
-# Pipe to stdin emails
 content = ''
 while data = $stdin.gets
   content << data

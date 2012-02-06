@@ -31,12 +31,12 @@ module Eyepaste
       def expire_emails_before(epoch)
         all_keys = @redis.keys('email:*')
         # examine each hash to see if it is before our epoch
-        to_del = []
+        keys_to_del = []
         all_keys.each do |key|
           key_epoch = @redis.hmget(key, :created_at).first.to_i
-          to_del << key if key_epoch < epoch.to_i
+          keys_to_del << key if key_epoch < epoch.to_i
         end
-        @redis.del(*to_del)
+        @redis.del(*keys_to_del) if keys_to_del.length > 0
       end
 
       def delete_all

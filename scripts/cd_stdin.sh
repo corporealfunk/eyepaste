@@ -2,7 +2,8 @@
 
 # changes the current working directory to the
 # sinatra project root before executing the given
-# ruby script with the given ruby binary
+# ruby script with the given ruby binary, passing stdin
+# to the target script
 
 # usage:
 # ./cd.sh "/path/to/ruby/wrapper/or/binary" "path/to/script/relative/to/project/root"
@@ -14,4 +15,4 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "$DIR/.."
 
-"$1" "$DIR/../$2"
+cat - | "$1" "$DIR/../$2"
