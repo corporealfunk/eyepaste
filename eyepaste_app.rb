@@ -21,5 +21,9 @@ module Eyepaste
 
       haml :inbox
     end
+
+    not_found do
+      haml :error_404, :layout => false
+    end
   end
 end

@@ -74,4 +74,11 @@ describe 'Eyepaste Site' do
       end
     end
   end
+
+  describe '404 not found' do
+    it "display our custom 404 page" do
+      get '/fakepagenotreal'
+      last_response.body.should =~ /Page Not Found :\(/
+    end
+  end
 end

@@ -1,0 +1,24 @@
+!!! 5
+%html
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "ERROR 404 - Not Found", :name => "title"}/
+    %meta{:content => "eyepaste.com is a free disposable email service", :name => "description"}/
+    %meta{:content => "email, disposable email", :name => "keywords"}/
+    %meta{:content => "en", :name => "language"}/
+    %title ERROR 404 - Not Found
+    %link{:href => "/favicon.png", :rel => "icon", :type => "image/png"}/
+    %link{:href => "/css/ep_styles.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+  %body
+    #container
+      #siteerror
+        %h1
+          %a{:href => "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5", :target => "_new"} ERROR 404
+          , Page Not Found :(
+        %a{:href => "/"}
+          %img{:alt => "ERROR 404", :src => "/images/error404.gif"}
+        %h2 woops! that's not gonna work!
+        %h3
+          i dunno, try the
+          %a{:href => "/"} homepage
+          ?
