@@ -19,9 +19,9 @@
         #linkbox
         %ul#topnav
           %li
-            %a{:href => "/about.html"} about
+            %a{:href => "/"} home
           %li
-            %a{:href => "javascript:(function(){%20q=document.getSelection();%20if(!q)%20q=prompt('Eyepaste%20Mailbox:');%20if(q)%20location.href='http://www.eyepaste.com/inbox/'+escape(q)+'@eyepaste.com';%20})()"} bookmarklet
+            %a{:href => "/about.html"} about
       #content
         = yield
       #pre_footer
