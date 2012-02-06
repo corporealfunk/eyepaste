@@ -13,10 +13,14 @@ end
 
 storage = Eyepaste::Storage.factory
 
-email = Eyepaste::Email.parse_raw_email(content)
+begin
+  email = Eyepaste::Email.parse_raw_email(content)
+rescue ArgumentError => e
+  LOGGER.warn "#{e.class}: #{e.message}:\n#{content}"
+end
 
 begin
   storage.append_email(email.to, email)
-rescue ArgumentError, Encoding::UndefinedConversionError => e
-  LOGGER.warn "#{e.class}: #{content}"
+rescue Encoding::UndefinedConversionError => e
+  LOGGER.warn "#{e.class}: #{e.message}:\n#{content}"
 end
