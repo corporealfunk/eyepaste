@@ -17,6 +17,6 @@ email = Eyepaste::Email.parse_raw_email(content)
 
 begin
   storage.append_email(email.to, email)
-rescue Encoding::UndefinedConversionError => e
+rescue ArgumentError, Encoding::UndefinedConversionError => e
   LOGGER.warn "#{e.class}: #{content}"
 end
