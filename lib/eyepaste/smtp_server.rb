@@ -23,7 +23,7 @@ module Eyepaste
         @storage.append_email(email.to, email)
       rescue Exception => e
         # never let us die, only log exceptions:
-        LOGGER.warn "#{e.class}: #{e.message}:\n#{content}"
+        LOGGER.warn "#{e.class}: #{e.message}:\n#{@email_content}"
       ensure
         @email_content = ''
       end
