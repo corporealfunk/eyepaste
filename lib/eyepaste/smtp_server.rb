@@ -4,6 +4,7 @@ module Eyepaste
       super
       @parms[:chunksize] = 1024
       @storage = Eyepaste::Storage::factory
+      @email_content = ''
     end
 
     def receive_recipient(recipient)
@@ -12,7 +13,7 @@ module Eyepaste
     end
 
     def receive_data_chunk(data)
-      @email_content << data
+      @email_content << data if data
       true
     end
 
@@ -23,6 +24,8 @@ module Eyepaste
       rescue Exception => e
         # never let us die, only log exceptions:
         LOGGER.warn "#{e.class}: #{e.message}:\n#{content}"
+      ensure
+        @email_content = ''
       end
 
       true

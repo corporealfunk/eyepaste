@@ -29,15 +29,18 @@ run_cmd() {
 case $1 in
   start)
     run_cmd "$RUBY $SCRIPT start"
+    run_cmd "$RUBY $SCRIPT status"
   ;;
   stop)
     run_cmd "$RUBY $SCRIPT stop"
   ;;
   restart)
     run_cmd "$RUBY $SCRIPT restart"
+    run_cmd "$RUBY $SCRIPT status"
   ;;
   reload)
     run_cmd "$RUBY $SCRIPT reload"
+    run_cmd "$RUBY $SCRIPT status"
   ;;
   status)
     run_cmd "$RUBY $SCRIPT status"
