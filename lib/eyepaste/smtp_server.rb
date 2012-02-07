@@ -13,7 +13,7 @@ module Eyepaste
     end
 
     def receive_data_chunk(data)
-      data.each { |byte| @email_content << byte }
+      @email_content << data.join("\n")
       true
     end
 
