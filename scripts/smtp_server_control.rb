@@ -1,3 +1,9 @@
+# this script daemonizes and "controls" the smtp_server.rb script
+# (using the Deamons gem which tracks pidfiles, stderr/out logging, etc)
+# this script should be called to start and stop the smtp_server like so:
+#
+# ruby smtp_server_control.rb (start|stop|restart|status)
+
 require 'rubygems'
 require 'bundler/setup'
 

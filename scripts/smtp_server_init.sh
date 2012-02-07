@@ -11,6 +11,8 @@
 
 # Author: Jon Moniaci <jonmoniaci [at] gmail.com>
 
+# This is an example init.d script, currently tested on Debian squeeze
+
 # change APP_ROOT and RUBY to match your eyepaste and ruby installation
 APP_ROOT="/var/www/eyepaste/www.eyepaste.com"
 RUBY="/usr/local/rvm/wrappers/ruby-1.9.2-p290/ruby"

@@ -1,3 +1,6 @@
+# this is the actual main loop for the eyepaste SMTP
+# server, run via EventMachine
+
 require 'rubygems'
 require 'bundler/setup'
 
