@@ -12,9 +12,9 @@
 # Author: Jon Moniaci <jonmoniaci [at] gmail.com>
 
 # change APP_ROOT and RUBY to match your eyepaste and ruby installation
-APP_ROOT="/Users/jonathan/eyepaste"
-RUBY="/Users/jonathan/.rvm/wrappers/ruby-1.9.2-p290/ruby"
-USER=jonathan
+APP_ROOT="/var/www/eyepaste/www.eyepaste.com"
+RUBY="/usr/local/rvm/wrappers/ruby-1.9.2-p290/ruby"
+USER="eyepaste"
 
 DESC="Eyepaste SMTP server"
 NAME=eyepaste_smtp
