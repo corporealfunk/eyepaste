@@ -4,6 +4,7 @@ gem "haml"
 gem "mail"
 gem "rack"
 gem "logging"
+gem "eventmachine"
 
 # storage backend is:
 gem "redis"
