@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 require File.dirname(__FILE__) + '/email_helper'
 
 describe Eyepaste::Email do
-  describe "#parse_raw_email" do
+  describe ".parse_raw_email" do
     it "returns Eyepaste::Email object" do
       Eyepaste::Email.parse_raw_email('email content').should be_a(Eyepaste::Email)
     end
@@ -31,7 +31,7 @@ describe Eyepaste::Email do
       end
 
       it "returns the email header to: field" do
-        @email.to.to_s.should == "notarealaddress@gmail.com"
+        @email.to.should == ["notarealaddress@gmail.com"]
       end
 
       it "returns the email header from: field" do
@@ -57,7 +57,7 @@ describe Eyepaste::Email do
       end
 
       it "returns the email header to: field" do
-        @email.to.to_s.should == "notarealaddress@gmail.com"
+        @email.to.should == ["notarealaddress@gmail.com"]
       end
 
       it "can encode the attributes as json" do
@@ -73,27 +73,47 @@ describe Eyepaste::Email do
       end
 
     end
+
+    context "an encoding problematic email when multipart" do
+      let(:email_content) do
+        File.open(EMAILS[:encoding_problem], 'rb') { |f| f.read }
+      end
+
+      it "can encode the attributes as json" do
+        @email = Eyepaste::Email.parse_raw_email(email_content)
+        @email.attributes.to_json.should be_kind_of(String)
+      end
+    end
+
+    context "an encoding problematic email when single part" do
+      let(:email_content) do
+        File.open(EMAILS[:xd3_conversion], 'rb') { |f| f.read }
+      end
+
+      it "can encode the attributes as json" do
+        @email = Eyepaste::Email.parse_raw_email(email_content)
+        @email.attributes.to_json.should be_kind_of(String)
+      end
+    end
+
+    context "an email with multiple recipients" do
+      let(:email_content) do
+        File.open(EMAILS[:multiple_tos], 'rb') { |f| f.read }
+      end
+
+      before(:each) do
+        @email = Eyepaste::Email.parse_raw_email(email_content)
+      end
+
+      it "returns three email addresses" do
+        @email.to.should == %w[notarealaddress@gmail.com bobby@eyepaste.com inurmailz@eyepaste.com]
+      end
+    end
   end
 
-  context "an encoding problematic email when multipart" do
-    let(:email_content) do
-      File.open(EMAILS[:encoding_problem], 'rb') { |f| f.read }
-    end
-
-    it "can encode the attributes as json" do
-      @email = Eyepaste::Email.parse_raw_email(email_content)
-      @email.attributes.to_json.should be_kind_of(String)
-    end
-  end
-
-  context "an encoding problematic email when single part" do
-    let(:email_content) do
-      File.open(EMAILS[:xd3_conversion], 'rb') { |f| f.read }
-    end
-
-    it "can encode the attributes as json" do
-      @email = Eyepaste::Email.parse_raw_email(email_content)
-      @email.attributes.to_json.should be_kind_of(String)
+  describe "#to" do
+    it "returns an array" do
+      Eyepaste::Email.new.to.should be_kind_of(Array)
     end
   end
 
@@ -119,6 +139,7 @@ describe Eyepaste::Email do
     end
 
     it "returns the to correctly" do
+      @email.attributes[:to].should be_an(Array)
       @email.attributes[:to].should == @email.to
     end
 
@@ -132,6 +153,12 @@ describe Eyepaste::Email do
 
     it "returns the from correctly" do
       @email.attributes[:from].should == @email.from
+    end
+
+    context "flatten result" do
+      it "returns to as a string" do
+        @email.attributes(:flatten => true)[:to].should be_a(String)
+      end
     end
   end
 
@@ -147,7 +174,7 @@ describe Eyepaste::Email do
                                    )
         email.raw_headers.should == 'headers'
         email.decoded_body.should == 'body'
-        email.to.should == 'me@me.com'
+        email.to.should == ['me@me.com']
         email.from.should == 'you@you.com'
         email.date.should == 'Wed, 01 Feb 2012 05:33:49 +1100'
         email.subject.should == 'my subject'
@@ -165,7 +192,7 @@ describe Eyepaste::Email do
                                    )
         email.raw_headers.should == 'headers'
         email.decoded_body.should == 'body'
-        email.to.should == 'me@me.com'
+        email.to.should == ['me@me.com']
         email.from.should == 'you@you.com'
         email.date.should == 'Wed, 01 Feb 2012 05:33:49 +1100'
         email.subject.should == 'my subject'

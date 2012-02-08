@@ -7,6 +7,11 @@ module Eyepaste
       @raw_headers = options[:raw_headers] || options['raw_headers']
       @decoded_body = options[:decoded_body] || options['decoded_body']
       @to = options[:to] || options['to'] || nil
+      @to = if @to
+              [@to] if !@to.kind_of?(Array)
+            else
+              []
+            end
       @from = options[:from] || options['from'] || nil
       @date = options[:date] || options['date'] || nil
       @subject = options[:subject] || options['subject'] || nil
@@ -20,16 +25,13 @@ module Eyepaste
       mail = Mail.new(content)
       email.raw_headers = mail.header.raw_source
       email.decoded_body = mail.body.decoded
-      email.to = mail.header[:to].to_s
       email.from = mail.header[:from].to_s
       email.date = mail.header[:date].to_s
       email.subject = mail.header[:subject].to_s
 
-      # if the to filed contains something between <> pull that out:
-      if email.to.match(/<(.+?)>/)
-        to_parts = email.to.match(/<(.+?)>/)
-        if to_parts.length == 2
-          email.to = to_parts[1]
+      if mail[:to]
+        mail[:to].addresses.each do |address|
+          email.to << address if address
         end
       end
 
@@ -68,10 +70,12 @@ module Eyepaste
     end
 
 
-    def attributes
+    def attributes(opts = {})
+      opts[:flatten] ||= false
+
       { :raw_headers => @raw_headers,
         :decoded_body => @decoded_body,
-        :to => @to,
+        :to => (opts[:flatten]) ? @to.join(', ') : @to,
         :from => @from,
         :date => @date,
         :subject => @subject

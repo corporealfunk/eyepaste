@@ -23,23 +23,89 @@ describe Eyepaste::Storage::Redis do
   # to test your own storage engine, change the each block below
   # to construct your own storage engine
   before(:each) do
-    # clean the keys:
     @storage = Eyepaste::Storage::Redis.new(redis)
+    #set up which domains to store email for
+    @storage.accepted_domains = %w[eyepaste.com gmail.com]
+
+    # clean the keys:
     @storage.delete_all
+  end
+
+  describe "#accepted_domains=" do
+    it "sets an acceptable domain as a string, stores as array" do
+      @storage.accepted_domains = 'whatme.com'
+      @storage.accepted_domains.should be_an(Array)
+      @storage.accepted_domains.length.should == 1
+    end
+
+    it "sets an acceptable domain as a array, stores as array" do
+      @storage.accepted_domains = %w[whatme.com whoyou.com]
+      @storage.accepted_domains.should be_an(Array)
+      @storage.accepted_domains.length.should == 2
+    end
   end
 
   describe "#delete_all" do
     it "removes all emails from storage" do
       @storage.append_email('test@eyepaste.com', Eyepaste::Email.new)
-      @storage.count_emails.should == 1
-      @storage.delete_all
-      @storage.count_emails.should == 0
+      expect {
+        @storage.delete_all
+      }.to change{ @storage.count_emails }.from(1).to(0)
     end
   end
 
   describe "#append_email" do
-    it "returns true" do
-      @storage.append_email('test@eyepaste.com', Eyepaste::Email.new).should == true
+    let(:inbox) { 'test@eyepaste.com' }
+
+    it "appends the email" do
+      expect {
+        @storage.append_email(inbox, Eyepaste::Email.new)
+      }.to change{ @storage.count_emails }.by 1
+    end
+
+    context "array passed as inbox" do
+      let(:inbox) { %w[test@eyepaste.com yoyo@eyepaste.com] }
+
+      it "appends the emails" do
+        expect {
+          @storage.append_email(inbox, Eyepaste::Email.new)
+        }.to change{ @storage.count_emails }.by 2
+      end
+    end
+
+    context "nil passed as inbox" do
+      let(:inbox) { nil }
+
+      it "does not append the email" do
+        expect {
+          @storage.append_email(inbox, Eyepaste::Email.new)
+        }.to_not change{ @storage.count_emails }
+      end
+    end
+
+    context "empty string passed as inbox" do
+      let(:inbox) { '' }
+
+      it "does not append the email" do
+        expect {
+          @storage.append_email(inbox, Eyepaste::Email.new)
+        }.to_not change{ @storage.count_emails }
+      end
+    end
+
+    context "unacceptable domain in inbox" do
+      let(:inbox) { 'wah@example.com' }
+
+      before(:each) do
+        @storage.accepted_domains = 'eyepaste.com'
+      end
+
+      it "does not append the email" do
+        expect {
+          @storage.append_email(inbox, Eyepaste::Email.new)
+        }.to_not change{ @storage.count_emails }
+      end
+
     end
 
     context "strange utf8 characters being stored" do

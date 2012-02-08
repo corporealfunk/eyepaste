@@ -3,14 +3,34 @@ require 'json'
 module Eyepaste
   module Storage
     class Redis
+      attr_reader :accepted_domains
 
       def initialize(redis)
         @redis = redis
+        @accepted_domains = []
+      end
+
+      def accepted_domains=(domain)
+        @accepted_domains = (domain.kind_of?(Array)) ? domain : [domain]
       end
 
       def append_email(inbox, email)
-        result = @redis.mapped_hmset(_email_key(inbox), _storage_hash(email.attributes))
-        return true if result == 'OK'
+        inbox = [inbox] if !inbox.kind_of?(Array)
+
+        inbox.reject! { |address| address.nil? || address.empty? }
+        inbox.reject! do |address|
+          matches = address.match(/@(.*)$/)
+          ret = (matches && matches[1]) ? !@accepted_domains.member?(matches[1]) : true
+          ret
+        end
+        return false if inbox.count == 0
+
+        ret = true
+        inbox.each do |address|
+          ret = false if @redis.mapped_hmset(_email_key(address), _storage_hash(email.attributes(:flatten => true))) != 'OK'
+
+        end
+        ret
       end
 
       def get_inbox(inbox)

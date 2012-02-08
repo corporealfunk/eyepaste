@@ -1,0 +1,34 @@
+Received: by 10.182.71.65 with SMTP id s1cs155902obu;
+        Tue, 31 Jan 2012 05:22:44 -0800 (PST)
+Received: by 10.236.189.105 with SMTP id b69mr34658147yhn.90.1328016164326;
+        Tue, 31 Jan 2012 05:22:44 -0800 (PST)
+Return-Path: <bounces@linode.com>
+Received: from www.linode.com (mail.linode.com. [67.18.92.99])
+        by mx.google.com with ESMTP id q5si11308307anf.134.2012.01.31.05.22.44;
+        Tue, 31 Jan 2012 05:22:44 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of bounces@linode.com designates 67.18.92.99 as permitted sender) client-ip=67.18.92.99;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of bounces@linode.com designates 67.18.92.99 as permitted sender) smtp.mail=bounces@linode.com
+Received: from www2.linode.com (chat.linode.com [173.255.203.34])
+  by www.linode.com (8.13.6/8.9.1) with ESMTP id q0VDM0Pa001780;
+  Tue, 31 Jan 2012 08:22:43 -0500
+Date: Tue, 31 Jan 2012 08:22:43 -0500 (EST)
+From: Linode Alerts <noreply@linode.com>
+To: 'Fake Man' <notarealaddress@gmail.com>, 'Bobby Jones' <bobby@eyepaste.com>, inurmailz@eyepaste.com
+Message-ID: <234207.361879.1328016163577.JavaMail.cfusion@www2.linode.com>
+Subject: Linode Alert - CPU Usage - ubuntu (linode411)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailer: ColdFusion 9 Application Server
+
+Your Linode, ubuntu, has exceeded the notification threshold (90) for CPU Usage by averaging 91.1% for the last 2 hours. The dashboard for this Linode is located at: <https://manager.linode.com/linodes/dashboard/ubuntu>
+
+This is an automated message, please do not respond to this email.  If you have questions, please open a support ticket.
+
+You can view or change your alert thresholds under the "Settings" tab of the Linode Manager.
+
+This is not meant as a warning or a representation that you are misusing your resources.  We encourage you to modify the thresholds based on your own individual needs.
+
+You may access the members' site at <https://manager.linode.com/>.
+
+Linode: linode108411
