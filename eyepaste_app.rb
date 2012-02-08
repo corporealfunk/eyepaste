@@ -7,6 +7,7 @@ module Eyepaste
     get "/" do
       @host = request.host
       @port = request.port
+      @email_domain = ACCEPTED_DOMAINS.first
       haml :index
     end
 

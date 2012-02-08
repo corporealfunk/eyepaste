@@ -6,10 +6,11 @@
   var interval_id = null;
   var last_inbox_count = 0;
   var domain=$('#emailbox').attr('data-domain');
+  var email_domain=$('#emailbox').attr('data-email-domain');
   var port=$('#emailbox').attr('data-port');
   port = (port == '80' || port == '443') ? '' : ':' + port;
 
-  var generate_email = function() {
+  var generate_email = function(email_domain) {
     var string_length = 5;
 
     var chars = "0123456789abcdefghiklmnopqrstuvwxyz";
@@ -19,10 +20,10 @@
       random_string += chars.substring(rnum, rnum+1);
     }
 
-    return random_string + '@' + domain;
+    return random_string + '@' + email_domain;
   };
 
-  var email = generate_email();
+  var email = generate_email(email_domain);
 
   var inbox_link = 'http://' + domain + port + '/inbox/' + escape(email);
   var rss_link = inbox_link + '.rss'

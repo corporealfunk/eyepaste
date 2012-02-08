@@ -35,9 +35,29 @@ describe 'Eyepaste Site' do
   end
 
   describe '/' do
-    it 'loads the homepage' do
+    let(:original_domains) { ACCEPTED_DOMAINS }
+
+    # this is a little hacky, but rack-test does
+    # not allow you to assign variables in the app
+    before(:each) do
+      # trigger memoize:
+      ACCEPTED_DOMAINS = original_domains
+
+      # reset
+      ACCEPTED_DOMAINS = %w[whatme.com]
       get '/'
+    end
+
+    after(:each) do
+      ACCEPTED_DOMAINS = original_domains
+    end
+
+    it 'loads the homepage' do
       last_response.should be_ok
+    end
+
+    it 'contains the email domain' do
+      last_response.body.should =~ /whatme.com/
     end
   end
 
