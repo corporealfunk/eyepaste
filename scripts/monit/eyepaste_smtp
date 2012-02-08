@@ -1,0 +1,5 @@
+check process eyepaste_smtp
+  with pidfile /var/www/eyepaste/www.eyepaste.com/tmp/eyepaste_smtp.pid
+  start program = "/var/www/eyepaste/www.eyepaste.com/scripts/sysvinit/eyepaste_smtp start"
+  stop program = "/var/www/eyepaste/www.eyepaste.com/scripts/sysvinit/eyepaste_smtp stop"
+  if failed host 127.0.0.1 port 2525 then restart
