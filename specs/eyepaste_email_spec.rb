@@ -30,8 +30,12 @@ describe Eyepaste::Email do
         @email.decoded_body.should_not be_nil
       end
 
-      it "returns the email header to: field" do
+      it "returns the email header to: field address array" do
         @email.to.should == ["notarealaddress@gmail.com"]
+      end
+
+      it "returns the email header to: field" do
+        @email.to_original.should == "notarealaddress@gmail.com"
       end
 
       it "returns the email header from: field" do
@@ -56,8 +60,12 @@ describe Eyepaste::Email do
         @email = Eyepaste::Email.parse_raw_email(email_content)
       end
 
-      it "returns the email header to: field" do
+      it "returns the email header to: field Array" do
         @email.to.should == ["notarealaddress@gmail.com"]
+      end
+
+      it "returns the email header to: field" do
+        @email.to_original.should == "Jon <notarealaddress@gmail.com>"
       end
 
       it "can encode the attributes as json" do
@@ -143,6 +151,11 @@ describe Eyepaste::Email do
       @email.attributes[:to].should == @email.to
     end
 
+    it "returns the to_original correctly" do
+      @email.attributes[:to_original].should be_a(String)
+      @email.attributes[:to_original].should == @email.to_original
+    end
+
     it "returns the date correctly" do
       @email.attributes[:date].should == @email.date
     end
@@ -168,6 +181,7 @@ describe Eyepaste::Email do
         email = Eyepaste::Email.new(:raw_headers => 'headers',
                                     :decoded_body => 'body',
                                     :to => 'me@me.com',
+                                    :to_original => 'Me <me@me.com>',
                                     :from => 'you@you.com',
                                     :date => 'Wed, 01 Feb 2012 05:33:49 +1100',
                                     :subject => 'my subject'
@@ -175,9 +189,18 @@ describe Eyepaste::Email do
         email.raw_headers.should == 'headers'
         email.decoded_body.should == 'body'
         email.to.should == ['me@me.com']
+        email.to_original.should == 'Me <me@me.com>'
         email.from.should == 'you@you.com'
         email.date.should == 'Wed, 01 Feb 2012 05:33:49 +1100'
         email.subject.should == 'my subject'
+      end
+
+      context "email to contains multiple addresses that were flattened" do
+        it "#to returns array of addresses" do
+          email = Eyepaste::Email.new(:to => 'me@me.com, you@you.com')
+          email.to.should be_kind_of(Array)
+          email.to.should == %w[me@me.com you@you.com]
+        end
       end
     end
 
@@ -186,6 +209,7 @@ describe Eyepaste::Email do
         email = Eyepaste::Email.new('raw_headers' => 'headers',
                                     'decoded_body' => 'body',
                                     'to' => 'me@me.com',
+                                    'to_original' => 'Me <me@me.com>',
                                     'from' => 'you@you.com',
                                     'date' => 'Wed, 01 Feb 2012 05:33:49 +1100',
                                     'subject' => 'my subject'
@@ -193,6 +217,7 @@ describe Eyepaste::Email do
         email.raw_headers.should == 'headers'
         email.decoded_body.should == 'body'
         email.to.should == ['me@me.com']
+        email.to_original.should == 'Me <me@me.com>'
         email.from.should == 'you@you.com'
         email.date.should == 'Wed, 01 Feb 2012 05:33:49 +1100'
         email.subject.should == 'my subject'

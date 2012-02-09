@@ -1,17 +1,19 @@
 module Eyepaste
   class Email
-    attr_accessor :raw_headers, :decoded_body, :to, :from, :date, :subject
+    attr_accessor :raw_headers, :decoded_body, :to, :from, :date, :subject, :to_original
 
 
     def initialize(options = {})
       @raw_headers = options[:raw_headers] || options['raw_headers']
       @decoded_body = options[:decoded_body] || options['decoded_body']
       @to = options[:to] || options['to'] || nil
-      @to = if @to
-              [@to] if !@to.kind_of?(Array)
-            else
-              []
-            end
+      case @to
+      when String
+        @to = @to.split(',').map { |address| address.strip }
+      when NilClass
+        @to = []
+      end
+      @to_original = options[:to_original] || options['to_original'] || nil
       @from = options[:from] || options['from'] || nil
       @date = options[:date] || options['date'] || nil
       @subject = options[:subject] || options['subject'] || nil
@@ -28,6 +30,7 @@ module Eyepaste
       email.from = mail.header[:from].to_s
       email.date = mail.header[:date].to_s
       email.subject = mail.header[:subject].to_s
+      email.to_original = (mail.header[:to]) ? mail.header[:to].decoded.to_s : nil
 
       if mail[:to]
         mail[:to].addresses.each do |address|
@@ -76,6 +79,7 @@ module Eyepaste
       { :raw_headers => @raw_headers,
         :decoded_body => @decoded_body,
         :to => (opts[:flatten]) ? @to.join(', ') : @to,
+        :to_original => @to_original,
         :from => @from,
         :date => @date,
         :subject => @subject

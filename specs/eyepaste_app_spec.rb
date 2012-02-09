@@ -84,13 +84,32 @@ describe 'Eyepaste Site' do
     end
 
     context "emails in the box" do
-      before(:each) do
-        storage.append_email('jjm@eyepaste.com', emails[:multi_part])
-        get '/inbox/jjm@eyepaste.com'
+      context "one address in the to field" do
+        before(:each) do
+          storage.append_email('jjm@eyepaste.com', emails[:multi_part])
+          get '/inbox/jjm@eyepaste.com'
+        end
+
+        it "displays the headers" do
+          last_response.body.should =~ /notarealaddress/
+        end
+
+        describe "the to field" do
+          it "displays the address" do
+            last_response.body.should =~ /<td>Jon &lt;notarealaddress@gmail.com&gt;<\/td>/
+          end
+        end
       end
 
-      it "displays the headers" do
-        last_response.body.should =~ /notarealaddress/
+      context "more than one address in the to field" do
+        before(:each) do
+          storage.append_email('jjm@eyepaste.com', emails[:multiple_tos])
+          get '/inbox/jjm@eyepaste.com'
+        end
+
+        it "displays the addresses" do
+          last_response.body.should =~ /<td>&\#x27;Fake Man&\#x27; &lt;notarealaddress@gmail.com&gt;, &\#x27;Bobby Jones&\#x27; &lt;bobby@eyepaste.com&gt;, inurmailz@eyepaste.com<\/td>/
+        end
       end
     end
   end
