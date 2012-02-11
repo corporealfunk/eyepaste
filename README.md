@@ -147,10 +147,12 @@ as root:
 
 ```bash
 cd /etc
-cat 'eyepaste "|/path/to/eyepaste/scripts/cd.sh /usr/bin/ruby scripts/intake.rb"' >> aliases
+cat 'eyepaste "|/path/to/eyepaste/scripts/cd_stdin.sh /usr/bin/ruby scripts/intake.rb"' >> aliases
 newaliases
 postfix reload
 ```
+
+Note that it is important to use `cd_stdin.sh` vs the `cd.sh` that was used in the crontab. `cd_stdin.sh` changes the working directory before running ruby, but also passes all STDIN input through to ruby.
 
 In reality, you probably want this alias as the top of your aliases file instead of at the bottom as appending would do above.
 
@@ -232,3 +234,16 @@ rspec specs/*_spec.rb
 ```
 
 Please note that the suite flushes the Redis store before each test involving storage.
+
+## License
+
+eyepaste is licensed under the MIT license:
+
+Copyright (c) 2012. Jon Moniaci.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
