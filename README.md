@@ -80,7 +80,7 @@ EMAIL_MAX_LIFE_HOURS = 1
 
 # an array of domains to accept email for. Any email that is not "@" a domain in this
 # array will not be stored
-ACCEPTED_DOMAINS = %w[eyepaste.com]
+ACCEPTED_DOMAINS = %w[yourdomain.com]
 
 # Setup your storage engine, here Redis is being used, you can configure
 # the Redis gem as necessary, then pass it to the Eyepaste::Storage::Redis
@@ -94,6 +94,9 @@ Eyepaste::Storage.set_factory do
 end
 ```
 
+You must also run `bundle install` in the root of the app to install all necessary gems.
+
+run `rackup` to ensure that you are able to start the application and visit it via http.
 
 ### Cron
 
@@ -215,3 +218,17 @@ redis-cli keys "*"
 ```
 
 And on the web you should be able to visit `http://yourdomain.com/inbox/i5qmn@yourdomain.com`
+
+## Tests
+
+RSpec tests cover the Eyepaste library as well as integration testing of the sinatra application. Redis must be running to test the storage engine and run the integration tests.
+The Eyepaste::SmtpServer is not currently covered by tests.
+
+To run the test suite, with Redis running:
+
+```bash
+cd /path/to/eyepaste
+rspec specs/*_spec.rb
+```
+
+Please note that the suite flushes the Redis store before each test involving storage.
