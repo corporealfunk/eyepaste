@@ -14,9 +14,9 @@ Currently, there are two supported email intake methods:
 * Pipe raw emails to `scripts/intake.rb` stdin
 * Run the Eyepaste::SmtpServer daemon process to receive emails directly using the SMTP protocol (control script at `scripts/smtp_server_control.rb`)
 
-It is not recommended that the Eyepaste::SmtpServer process be bound to your public IP address on port 25 to function as your frontline SMTP server. It is not a full-fledged SMTP protocol implementation. It is better to run a tested, secure SMTP server publically (Postfix, Exim, etc.), then configure that server process to forward email to the Eyepaste::SmtpServer which can be bound to a port on the loopback address.
+It is not recommended that the Eyepaste::SmtpServer process be bound to your public IP address on port 25 to function as your frontline SMTP server. It is not a full-fledged SMTP protocol implementation. It is better to run a tested, secure SMTP server publicly (Postfix, Exim, etc.), then configure that server process to forward email to the Eyepaste::SmtpServer which can be bound to a port on the loopback address.
 
-Currently, the only backend storage system that is supported is Redis. However, writing new Eyepaste::Storage::* class to connect to a different backend should be fairly straight forward.
+Currently, the only backend storage system that is supported is Redis. However, writing new Eyepaste::Storage::* classes to connect to a different backend should be fairly straightforward.
 
 ## Requirements
 
@@ -30,7 +30,7 @@ eyepaste has been tested against ruby-1.9.2-p290.
 
 ### RubyGems
 
-eyepatse uses the `bundler` gem to manage gem dependencies.
+eyepaste uses the `bundler` gem to manage gem dependencies.
 
 ### Redis
 
@@ -75,7 +75,7 @@ The installation of eyepaste at eyepaste.com currently receives over 150,000 ema
 In the application root there is a `config.rb` file. It contains some constants of interest as well as configuration of the storage engine.
 
 ```ruby
-# this determines how long emails we be kept in storage after being created
+# this determines how long emails will be kept in storage after being created
 EMAIL_MAX_LIFE_HOURS = 1
 
 # an array of domains to accept email for. Any email that is not "@" a domain in this
@@ -109,9 +109,9 @@ An example cron line:
 0 * * * * /path/to/eyepaste/scripts/cd.sh /usr/bin/ruby scripts/gc.rb
 ```
 
-You'll notice here that we are first calling `cd.sh`, then passing the ruby binary and then the script to execute with ruby. `cd.sh` makes sure that the given ruby binary is operating in the correct working directory in order for Bundler to find the correct Gemfile and require the correct versions of gems.
+You'll notice here that we are first calling `scripts/cd.sh`, then passing the ruby binary and then the script to execute with ruby. `scripts/cd.sh` makes sure that the given ruby binary is operating in the correct working directory in order for Bundler to find the correct Gemfile and require the correct versions of gems.
 
-`cd.sh` also makes it easy to use RVM and swap out your ruby binary being used, by simply passing in the path to the ruby binary as the first argument to the script.
+`scripts/cd.sh` also makes it easy to use RVM and swap out your ruby binary being used, by simply passing in the path to the ruby binary or RVM ruby wrapper as the first argument to the script.
 
 ### Postfix
 
@@ -141,7 +141,7 @@ postfix reload
 
 This instructs Postfix to forward any email for *@yourdomain.com to the eyepaste system user.
 
-However, you now need to tell Postfix that all email for the `eyepaste` system user should be piped to the intake script:
+However, you now need to tell Postfix that all email for the eyepaste system user should be piped to the intake script:
 
 as root:
 
@@ -152,13 +152,13 @@ newaliases
 postfix reload
 ```
 
-Note that it is important to use `cd_stdin.sh` vs the `cd.sh` that was used in the crontab. `cd_stdin.sh` changes the working directory before running ruby, but also passes all STDIN input through to ruby.
+Note that it is important to use `scripts/cd_stdin.sh` vs the `scripts/cd.sh` that was used in the crontab. `scripts/cd_stdin.sh` changes the working directory before running ruby, but also passes all STDIN input through to ruby.
 
-In reality, you probably want this alias as the top of your aliases file instead of at the bottom as appending would do above.
+In reality, you probably want this alias at the top of your aliases file instead of at the bottom as appending would do above.
 
 #### Eyepaste::SmtpServer Process
 
-This setup requires more moving parts but is far more efficient, it relies on the EventMachine gem SMTP server implementation.
+This setup requires more moving parts but is far more efficient, it relies on the EventMachine gem's EM::Protocols::SmtpServer implementation.
 
 By default the server will bind to 127.0.0.1:2525
 
@@ -172,7 +172,7 @@ RUBY="/path/to/ruby/binary"
 USER="system_user_to_run_server_as"
 ```
 
-If you choose to use Monit to start, stop and monitor the eyepaste_smtp process, see the monit example in `monit/eyepaste_smtp`. You will need to edit the paths there as well.
+If you choose to use monit to start, stop and monitor the eyepaste_smtp process, see the monit example in `monit/eyepaste_smtp`. You will need to edit the paths there as well.
 
 I do not recommend you run the process as root. Calling the sysvinit script will run the process as the user specified in the script, like so:
 
