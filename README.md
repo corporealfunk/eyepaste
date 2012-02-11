@@ -126,7 +126,7 @@ There are two methods for accepting and storing email:
 
 This method is the easiest to configure, but does tend to be slow and consume more server resources, since the ruby interpreter is fired up and must initialize Bundler and the Eyepaste library on each email received. 
 
-First, configure Postfix to accept forward all email for emails in your `ACCEPTED_DOMAINS` array via a virtual transport map:
+First, configure Postfix to accept all email for emails in your `ACCEPTED_DOMAINS` array via a virtual transport map:
 
 as root:
 
@@ -180,7 +180,7 @@ Verify the process is running and bound:
 
 `netstat -tap | grep 2525`
 
-Next, configure Postfix to accept forward all email for emails in your `ACCEPTED_DOMAINS` array via a virtual transport map:
+Next, configure Postfix to accept all email for emails in your `ACCEPTED_DOMAINS` array via a virtual transport map:
 
 as root:
 
