@@ -182,3 +182,7 @@ div#siteerror h1,h2,h3 {
   float:right;
   margin-top: -37px;
 }
+
+#pre_footer iframe {
+  vertical-align: top;
+}

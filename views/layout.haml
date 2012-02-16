@@ -1,11 +1,14 @@
 !!! 5
-%html
+%html{ :itemscope => true, :itemtype => "http://schema.org/website" }
   %head
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %meta{:content => "eyepaste.com -&gt; disposable email", :name => "title"}/
     %meta{:content => "eyepaste.com is a free disposable email service", :name => "description"}/
     %meta{:content => "email, disposable email", :name => "keywords"}/
     %meta{:content => "en", :name => "language"}/
+    %meta{:itemprop => "name", :content=> "eyepaste.com -&gt; disposable email" }
+    %meta{:itemprop => "description", :content => "free, simple, disposable email." }
+    %meta{:itemprop => "image", :content => "http://#{@host_with_port}/images/logo.gif" }
     %title eyepaste.com -&gt; disposable email
     %link{:href => "/favicon.png", :rel => "icon", :type => "image/png"}/
     %link{:href => "/css/ep_styles.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
@@ -25,6 +28,9 @@
       #content
         = yield
       #pre_footer
+        .fb-like{ 'data-href' => "http://#{@host_with_port}", 'data-send' => "false", 'data-layout' => "button_count", 'data-width' => "110", 'data-show-faces' => "false" }
+        %a.twitter-share-button{ :href => "https://twitter.com/share", 'data-url' => "http://#{@host_with_port}"} Tweet
+        <g:plusone size="small"></g:plusone>
         %a.firefox{:href => "http://getfirefox.com/", :target => "_new", :title => "Get Firefox - The Browser, Reloaded."}
           %img{:alt => "Get Firefox", :border => "0", :height => "15", :src => "http://www.mozilla.org/products/firefox/buttons/firefox_80x15.png", :width => "80"}/
         .clear
@@ -35,3 +41,20 @@
             %a{:href => "http://www.jonmoniaci.com/", :target => "_new"} jjm
           2008 -
           = Time.now.strftime('%Y')
+    #fb-root
+    %script{:type => "text/javascript"}
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    %script{:type => "text/javascript"}
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    %script{:type => "text/javascript"}
+      (function() {
+      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();

@@ -5,23 +5,21 @@ require File.dirname(__FILE__) + '/config.rb'
 module Eyepaste
   class App < ::Sinatra::Base
     get "/" do
-      @host = request.host
-      @port = request.port
+      _set_host_and_port
       @email_domain = ACCEPTED_DOMAINS.first
       haml :index
     end
 
     get "/about.html" do
+      _set_host_and_port
       haml :about
     end
 
     get %r{^/inbox/(.*?)(\.rss|\.json)?$} do
+      _set_host_and_port
       storage = Eyepaste::Storage.factory
       @inbox = params[:captures].first
       @emails = storage.get_inbox("#{params[:captures].first}")
-      host = request.host
-      port_with_colon = (request.port.to_s == '80' || request.port.to_s == '443') ? '' : ":#{request.port}"
-      @host_with_port = "#{host}#{port_with_colon}"
 
       case params[:captures][1]
       when nil
@@ -41,6 +39,13 @@ module Eyepaste
     helpers do
       include Rack::Utils
       alias_method :h, :escape_html
+    end
+
+    def _set_host_and_port
+      @host = request.host
+      @port = request.port
+      port_with_colon = (@port.to_s == '80' || @port.to_s == '443') ? '' : ":#{@port}"
+      @host_with_port = "#{@host}#{port_with_colon}"
     end
   end
 end
