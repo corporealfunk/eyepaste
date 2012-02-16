@@ -6,10 +6,15 @@
     %meta{:content => "eyepaste.com is a free disposable email service", :name => "description"}/
     %meta{:content => "email, disposable email", :name => "keywords"}/
     %meta{:content => "en", :name => "language"}/
-    %meta{:itemprop => "name", :content=> "eyepaste.com -&gt; disposable email" }
+    %meta{:itemprop => "name", :content=> "eyepaste -> disposable email" }
     %meta{:itemprop => "description", :content => "free, simple, disposable email." }
     %meta{:itemprop => "image", :content => "http://#{@host_with_port}/images/logo.gif" }
-    %title eyepaste.com -&gt; disposable email
+    %meta{:property => "og:image", :content => "http://#{@host_with_port}/images/eye_small.png" }
+    %meta{:property => "og:type", :content => "website" }
+    %meta{:property => "og:title", :content => "eyepaste -> disposable email" }
+    %meta{:property => "og:site_name", :content => "eyepaste -> disposable email" }
+    %meta{:property => "og:url", :content => "http://#{@host_with_port}" }
+    %title eyepaste -&gt; disposable email
     %link{:href => "/favicon.png", :rel => "icon", :type => "image/png"}/
     %link{:href => "/css/ep_styles.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
     %script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
