@@ -1,12 +1,12 @@
 .linkbox
   %img{ :src => '/images/feed-icon-sm.png' }
-  %a{ :href => "/inbox/#{@inbox}.rss" } RSS feed
-  %a{ :href => "/inbox/#{@inbox}" } permalink
+  %a{ :href => "/inbox/#{h(@inbox)}.rss" } RSS feed
+  %a{ :href => "/inbox/#{h(@inbox)}" } permalink
 
 - if @emails.count == 0
   %h3
     no emails found for
-    = @inbox
+    = h(@inbox)
     \:(
 
   %p
@@ -20,7 +20,7 @@
 - else
   %h3
     emails for
-    = @inbox
+    = h(@inbox)
     \:)
   - @emails.each do |email|
     .emailmessage
