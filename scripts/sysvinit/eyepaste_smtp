@@ -14,8 +14,8 @@
 # This is an example init.d script, currently tested on Debian squeeze
 
 # change APP_ROOT and RUBY to match your eyepaste and ruby installation
-APP_ROOT="/var/www/eyepaste/www.eyepaste.com"
-RUBY="/usr/local/rvm/wrappers/ruby-1.9.2-p290/ruby"
+APP_ROOT="/home/eyepaste/eyepaste_app/current"
+RUBY="/usr/local/rvm/wrappers/ruby-1.9.3-p392/ruby"
 USER="eyepaste"
 
 DESC="Eyepaste SMTP server"
