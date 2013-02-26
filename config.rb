@@ -16,7 +16,7 @@ Eyepaste::Storage.set_factory do
 end
 
 # configure the logger:
-log_file = File.dirname(__FILE__) + '/logs/eyepaste.log'
+log_file = File.dirname(__FILE__) + '/log/eyepaste.log'
 LOGGER = Logging.logger['eyepaste_log']
 LOGGER.add_appenders(
   Logging.appenders.file(log_file)
