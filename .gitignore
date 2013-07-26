@@ -1,3 +1,6 @@
 logs/*.log
 logs/*.output
 tmp/*.pid
+.rvmrc
+.ruby-version
+.ruby-gemset
