@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Eyepaste
   class Email
     attr_accessor :raw_headers, :decoded_body, :to, :from, :date, :subject, :to_original
@@ -17,6 +19,11 @@ module Eyepaste
       @from = options[:from] || options['from'] || nil
       @date = options[:date] || options['date'] || nil
       @subject = options[:subject] || options['subject'] || nil
+
+      # clean encodings, they should all be UTF-8, but may contain invalid bytes:
+      @raw_headers.force_encoding("ISO-8859-1").encode!("utf-8", replace: nil) if @raw_headers
+      @decoded_body.force_encoding("ISO-8859-1").encode!("utf-8", replace: nil) if @decoded_body
+      @subject.force_encoding("ISO-8859-1").encode!("utf-8", replace: nil) if @subject
     end
 
 
