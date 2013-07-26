@@ -11,7 +11,7 @@ describe Eyepaste::Storage::Redis do
   end
 
   let(:emails) do
-    emails = {} 
+    emails = {}
     EMAILS.each do |key, path|
       content = File.open(path, 'rb') { |f| f.read }
       emails[key] = Eyepaste::Email.parse_raw_email(content)
