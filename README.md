@@ -133,9 +133,9 @@ as root:
 ```bash
 adduser eyepaste
 cd /etc/postfix
-cat "@yourdomain.com eyepaste@localhost" > virtual
+echo "@yourdomain.com eyepaste@localhost" > virtual
 postmap virtual
-cat "virtual_alias_maps = hash:/etc/postfix/virtual" >> main.cf
+echo "virtual_alias_maps = hash:/etc/postfix/virtual" >> main.cf
 postfix reload
 ```
 
@@ -147,7 +147,7 @@ as root:
 
 ```bash
 cd /etc
-cat 'eyepaste "|/path/to/eyepaste/scripts/cd_stdin.sh /usr/bin/ruby scripts/intake.rb"' >> aliases
+echo 'eyepaste "|/path/to/eyepaste/scripts/cd_stdin.sh /usr/bin/ruby scripts/intake.rb"' >> aliases
 newaliases
 postfix reload
 ```
@@ -189,9 +189,9 @@ as root:
 ```bash
 adduser eyepaste
 cd /etc/postfix
-cat "@yourdomain.com eyepaste@localhost" > virtual
+echo "@yourdomain.com eyepaste@localhost" > virtual
 postmap virtual
-cat "virtual_alias_maps = hash:/etc/postfix/virtual" >> main.cf
+echo "virtual_alias_maps = hash:/etc/postfix/virtual" >> main.cf
 postfix reload
 ```
 
@@ -201,9 +201,9 @@ as root:
 
 ```bash
 cd /etc/postfix
-cat "localhost smtp:[127.0.0.1]:2525" > transport
+echo "localhost smtp:[127.0.0.1]:2525" > transport
 postmap transport
-cat "transport_maps = hash:/etc/postfix/transport" >> main.cf
+echo "transport_maps = hash:/etc/postfix/transport" >> main.cf
 postfix reload
 ```
 
