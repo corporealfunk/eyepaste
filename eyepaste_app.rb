@@ -15,7 +15,7 @@ module Eyepaste
       haml :about
     end
 
-    get %r{^/inbox/(.*?)(\.rss|\.json)?$} do
+    get %r{/inbox/(.*?)(\.rss|\.json)?} do
       _set_host_and_port
       storage = Eyepaste::Storage.factory
       @inbox = params[:captures].first
