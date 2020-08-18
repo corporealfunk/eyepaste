@@ -8,12 +8,12 @@
     %meta{:content => "en", :name => "language"}/
     %meta{:itemprop => "name", :content=> "eyepaste -> disposable email" }
     %meta{:itemprop => "description", :content => "free, simple, disposable email." }
-    %meta{:itemprop => "image", :content => "http://#{@host_with_port}/images/logo.gif" }
-    %meta{:property => "og:image", :content => "http://#{@host_with_port}/images/eye_small.png" }
+    %meta{:itemprop => "image", :content => "https://#{@host_with_port}/images/logo.gif" }
+    %meta{:property => "og:image", :content => "https://#{@host_with_port}/images/eye_small.png" }
     %meta{:property => "og:type", :content => "website" }
     %meta{:property => "og:title", :content => "eyepaste -> disposable email" }
     %meta{:property => "og:site_name", :content => "eyepaste -> disposable email" }
-    %meta{:property => "og:url", :content => "http://#{@host_with_port}" }
+    %meta{:property => "og:url", :content => "https://#{@host_with_port}" }
     %title eyepaste -&gt; disposable email
     %link{:href => "/favicon.png", :rel => "icon", :type => "image/png"}/
     %link{:href => "/css/ep_styles.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
@@ -33,8 +33,8 @@
       #content
         = yield
       #pre_footer
-        .fb-like{ 'data-href' => "http://#{@host_with_port}", 'data-send' => "false", 'data-layout' => "button_count", 'data-width' => "110", 'data-show-faces' => "false" }
-        %a.twitter-share-button{ :href => "https://twitter.com/share", 'data-url' => "http://#{@host_with_port}"} Tweet
+        .fb-like{ 'data-href' => "https://#{@host_with_port}", 'data-send' => "false", 'data-layout' => "button_count", 'data-width' => "110", 'data-show-faces' => "false" }
+        %a.twitter-share-button{ :href => "https://twitter.com/share", 'data-url' => "https://#{@host_with_port}"} Tweet
         <g:plusone size="small"></g:plusone>
         %a.firefox{:href => "http://getfirefox.com/", :target => "_new", :title => "Get Firefox - The Browser, Reloaded."}
           %img{:alt => "Get Firefox", :border => "0", :height => "15", :src => "http://www.getfirefox.net/buttons/80x15_white.png", :width => "80"}/

@@ -25,7 +25,7 @@
 
   var email = generate_email(email_domain);
 
-  var inbox_link = 'http://' + domain + port + '/inbox/' + escape(email);
+  var inbox_link = 'https://' + domain + port + '/inbox/' + escape(email);
   var rss_link = inbox_link + '.rss'
   var poll_link = '/inbox/' + escape(email) + '.json'
 

@@ -6,7 +6,7 @@
       mailbox feed on
       = @host_with_port
     %link
-      = "http://#{@host_with_port}"
+      = "https://#{@host_with_port}"
     %description
       this is a feed of email coming into the mailbox
       = @inbox
@@ -24,7 +24,7 @@
           :cdata
             #{email.from}: #{email.subject}
         %link
-          = "http://#{@host_with_port}/inbox/#{@inbox}"
+          = "https://#{@host_with_port}/inbox/#{@inbox}"
         %description
           :cdata
             <p>
