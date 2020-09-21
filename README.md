@@ -178,6 +178,15 @@ I do not recommend you run the process as root. Calling the sysvinit script will
 
 `/path/to/eyepaste/scripts/sysvinit/eyepaste_smtp start`
 
+**Systemd**
+
+There is also systemd service definition in `scripts/eyepaste_smtp.service`
+
+Edit that file and update the code directory where eyepaste is located on your machine. Copy or link the service file to the `/etc/systemd/system` directory and run as root:
+
+`systemctl enable eyepaste_smtp.service`
+`systemctl start eyepaste_smtp.service`
+
 Verify the process is running and bound:
 
 `netstat -tap | grep 2525`

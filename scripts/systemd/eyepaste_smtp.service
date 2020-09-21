@@ -1,0 +1,16 @@
+[Unit]
+Description=Eyepaste SMTP
+After=redis.service
+
+[Service]
+Type=simple
+User=eyepaste
+Group=eyepaste
+WorkingDirectory=/path/to/eyepaste/code
+ExecStart=/bin/bash -lc 'bundle exec ruby scripts/smtp_server.rb'
+TimeoutSec=30
+RestartSec=15s
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
