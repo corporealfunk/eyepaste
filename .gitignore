@@ -2,7 +2,5 @@ log/*.log
 log/*.output
 tmp/*.pid
 .rvmrc
-.ruby-version
-.ruby-gemset
 vendor/bundle
 .env
