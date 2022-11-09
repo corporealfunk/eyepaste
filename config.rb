@@ -9,7 +9,7 @@ ACCEPTED_DOMAINS = %w[eyepaste.com]
 
 # configure the storage engine:
 Eyepaste::Storage.set_factory do
-  redis = ::Redis.new(:host => "127.0.0.1", :port => 6379)
+  redis = ::Redis.new(:url => ENV['REDIS_URL'])
   storage = Eyepaste::Storage::Redis.new(redis)
   storage.accepted_domains = ACCEPTED_DOMAINS
   storage

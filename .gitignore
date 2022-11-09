@@ -4,3 +4,5 @@ tmp/*.pid
 .rvmrc
 .ruby-version
 .ruby-gemset
+vendor/bundle
+.env

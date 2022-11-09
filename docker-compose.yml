@@ -1,0 +1,22 @@
+version: '3.8'
+name: "eyepaste"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+      - "2525:2525"
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    env_file: .env
+    environment:
+      RAILS_ENV: development
+
+  redis:
+    image: redis:7-alpine
+    restart: always

@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem "sinatra", :require => "sinatra/base"
-gem "haml"
+gem "haml", '~>5'
 gem "mail"
 gem "rack"
 gem "logging"
@@ -10,6 +10,8 @@ gem "daemons"
 
 # storage backend is:
 gem "redis"
+
+gem "puma"
 
 # only for testing
 gem "rspec"

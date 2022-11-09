@@ -2,6 +2,8 @@ require 'sinatra'
 
 require File.dirname(__FILE__) + '/config.rb'
 
+set :haml, :format => :html5
+
 module Eyepaste
   class App < ::Sinatra::Base
     get "/" do

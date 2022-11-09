@@ -1,50 +1,57 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    daemons (1.3.1)
-    diff-lcs (1.4.4)
+    connection_pool (2.3.0)
+    daemons (1.4.1)
+    diff-lcs (1.5.0)
     eventmachine (1.2.7)
-    haml (5.1.2)
+    haml (5.2.2)
       temple (>= 0.8.0)
       tilt
     little-plugger (1.1.4)
-    logging (2.3.0)
+    logging (2.3.1)
       little-plugger (~> 1.1)
       multi_json (~> 1.14)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    mini_mime (1.0.2)
+    mini_mime (1.1.2)
     multi_json (1.15.0)
-    mustermann (1.1.1)
+    mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
-    rack (2.2.3)
-    rack-protection (2.0.8.1)
+    nio4r (2.5.8)
+    puma (6.0.0)
+      nio4r (~> 2.0)
+    rack (2.2.4)
+    rack-protection (2.2.2)
       rack
-    rack-test (1.1.0)
-      rack (>= 1.0, < 3)
-    redis (4.2.1)
-    rspec (3.9.0)
-      rspec-core (~> 3.9.0)
-      rspec-expectations (~> 3.9.0)
-      rspec-mocks (~> 3.9.0)
-    rspec-core (3.9.2)
-      rspec-support (~> 3.9.3)
-    rspec-expectations (3.9.2)
+    rack-test (2.0.2)
+      rack (>= 1.3)
+    redis (5.0.5)
+      redis-client (>= 0.9.0)
+    redis-client (0.11.1)
+      connection_pool
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.0)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
-    rspec-mocks (3.9.1)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
-    rspec-support (3.9.3)
-    ruby2_keywords (0.0.2)
-    sinatra (2.0.8.1)
-      mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.8.1)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.0)
+    ruby2_keywords (0.0.5)
+    sinatra (2.2.2)
+      mustermann (~> 2.0)
+      rack (~> 2.2)
+      rack-protection (= 2.2.2)
       tilt (~> 2.0)
-    temple (0.8.2)
-    tilt (2.0.10)
-    timecop (0.9.1)
+    temple (0.9.1)
+    tilt (2.0.11)
+    timecop (0.9.5)
 
 PLATFORMS
   ruby
@@ -52,9 +59,10 @@ PLATFORMS
 DEPENDENCIES
   daemons
   eventmachine
-  haml
+  haml (~> 5)
   logging
   mail
+  puma
   rack
   rack-test
   redis
@@ -63,4 +71,4 @@ DEPENDENCIES
   timecop
 
 BUNDLED WITH
-   1.17.3
+   2.2.33

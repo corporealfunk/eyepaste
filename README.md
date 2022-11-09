@@ -1,5 +1,7 @@
 # eyepaste
 
+Celebrating 10 years of eyepaste!
+
 ## Description
 
 eyepaste is a disposable email system that does not require account creation before mail can be received. For any domain that the system is currently accepting mail for, all email is accepted without question, stored, and accessible on the web as HTML or RSS.
@@ -22,11 +24,11 @@ Currently, the only backend storage system that is supported is Redis. However, 
 
 ## Linux
 
-eyepaste has only been fully deployed and tested on Debian Squeeze.
+eyepaste should run any current Linux distros.
 
 ### Ruby
 
-eyepaste has been tested against ruby-1.9.2-p290.
+eyepaste has been tested against ruby-3.0.4.
 
 ### RubyGems
 
@@ -36,7 +38,7 @@ eyepaste uses the `bundler` gem to manage gem dependencies.
 
 Currently Redis is the only supported storage system.
 
-eyepaste has been tested against redis-2.4.2.
+eyepaste has been tested against redis-7.
 
 ### Rack Compatible Web Server
 
@@ -74,6 +76,8 @@ The installation of eyepaste at eyepaste.com currently receives over 150,000 ema
 
 In the application root there is a `config.rb` file. It contains some constants of interest as well as configuration of the storage engine.
 
+To use Redis, make sure you set a REDIS_URL environment variable.
+
 ```ruby
 # this determines how long emails will be kept in storage after being created
 EMAIL_MAX_LIFE_HOURS = 1
@@ -87,7 +91,7 @@ ACCEPTED_DOMAINS = %w[yourdomain.com]
 # initializer. This block is run every time a storage engine object is
 # requested from Eyepaste::Storage.factory()
 Eyepaste::Storage.set_factory do
-  redis = ::Redis.new(:host => "127.0.0.1", :port => 6379)
+  redis = ::Redis.new(:url =>ENV['REDIS_URL'])
   storage = Eyepaste::Storage::Redis.new(redis)
   storage.accepted_domains = ACCEPTED_DOMAINS
   storage
@@ -244,11 +248,39 @@ rspec specs/*_spec.rb
 
 Please note that the suite flushes the Redis store before each test involving storage.
 
+## Docker
+
+You can also run this in docker on your local machine. Make sure you hav a .env file in the project root. See the .env-example file, or just copy it over:
+
+```bash
+cp .env-example .env
+```
+
+then:
+```bash
+docker-compose up -d
+```
+
+You should be able to visit http://localhost:3000 (or adjust to the port specified in .env)
+
+The intake SMTP server is listening and bound to localhost:2525.
+
+## Procfile based runners
+
+There is a Procfile in the root of the project. This can be used with the foreman gem to start both the web app process and the SMTP intake service:
+
+```bash
+gem install foreman
+foreman start
+```
+
+Also, PAAS platforms like Dokku should auto detect that this is a Ruby/Rack app and use this Procfile to start the processes.
+
 ## License
 
 eyepaste is licensed under the MIT license:
 
-Copyright (c) 2012. Jon Moniaci.
+Copyright (c) 2012-2022. Jon Moniaci.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
