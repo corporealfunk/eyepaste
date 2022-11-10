@@ -1,17 +1,39 @@
-* {
-  margin:0pt;
-  padding:0pt;
+html {
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 html, body {
   background:#FFFFFF none repeat scroll 0%;
   font-family:"lucida grande","lucida sans",verdana,sans-serif;
-  font-size:12px;
   font-size-adjust:none;
   font-style:normal;
   font-variant:normal;
   font-weight:normal;
   line-height:normal;
+}
+
+h3 {
+  font-weight: bold;
 }
 
 img {
@@ -23,19 +45,42 @@ p {
   text-align:justify;
 }
 
+#emailbox p {
+  text-align:left;
+}
+
 img#toplogo {
-  float:left;	
+}
+
+@media (min-width: 768px) {
+  img#toplogo {
+    float:left;
+  }
 }
 
 h2#tagline {
   font-style:italic;
   color:#AAAAAA;
-  padding:50px 0 0;
+  white-space:nowrap;
+}
+
+@media (min-width: 768px) {
+  h2#tagline {
+    padding:50px 0 0;
+  }
 }
 
 div#container {
-  width:750px;
-  margin:auto;
+  width: 100%;
+  margin: 2rem 0;
+  padding: 0 2rem;
+}
+
+@media (min-width: 768px) {
+  div#container {
+    width:750px;
+    margin:2rem auto;
+  }
 }
 
 div#footer {
@@ -63,8 +108,14 @@ div#emailbox {
   border-style:dashed;
   border-width:1px;
   padding:10px;
-  float:right;
-  margin:0 0 5px 15px;
+  margin-bottom:1rem;
+}
+
+@media (min-width: 768px) {
+  div#emailbox {
+    float:right;
+    margin:0 0 5px 15px;
+  }
 }
 
 table#headers_short {
@@ -126,7 +177,7 @@ div#notcheckingemail {
 
 ul#topnav {
   list-style-type:none;
-  white-space:nowrap;	
+  white-space:nowrap;
 }
 
 ul#topnav li {
@@ -170,7 +221,9 @@ div#siteerror {
   text-align:center;
 }
 
-div#siteerror h1,h2,h3 {
+div#siteerror h1,
+div#siteerror h1,
+div#siteerror h3 {
   margin:15px 0;
 }
 

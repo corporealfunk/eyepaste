@@ -1,6 +1,8 @@
 !!! 5
 %html{ :itemscope => true, :itemtype => "http://schema.org/website" }
   %head
+    %meta{ name: "viewport", content:"width=device-width, initial-scale=1.0"}
+
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %meta{:content => "eyepaste.com -&gt; disposable email", :name => "title"}/
     %meta{:content => "eyepaste.com is a free disposable email service", :name => "description"}/
@@ -35,7 +37,6 @@
       #pre_footer
         .fb-like{ 'data-href' => "https://#{@host_with_port}", 'data-send' => "false", 'data-layout' => "button_count", 'data-width' => "110", 'data-show-faces' => "false" }
         %a.twitter-share-button{ :href => "https://twitter.com/share", 'data-url' => "https://#{@host_with_port}"} Tweet
-        <g:plusone size="small"></g:plusone>
         %a.firefox{:href => "http://getfirefox.com/", :target => "_new", :title => "Get Firefox - The Browser, Reloaded."}
           Get Firefox
         .clear
@@ -56,9 +57,3 @@
       }(document, 'script', 'facebook-jssdk'));
     %script{:type => "text/javascript"}
       !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-    %script{:type => "text/javascript"}
-      (function() {
-      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-      po.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-      })();
