@@ -52,7 +52,7 @@ module Eyepaste
         end_i = (limit == 0 ? inbox_keys.length: start_i + limit) - 1
         end_i = [inbox_keys.length - 1, end_i].min
 
-        inbox_keys = inbox_keys[(start_i..end_i)]
+        inbox_keys = inbox_keys[(start_i..end_i)] || []
 
         inbox_keys.each do |key|
           from_storage = @redis.mapped_hmget(key, *_storage_hash_keys(Eyepaste::Email.new.attributes.keys))
