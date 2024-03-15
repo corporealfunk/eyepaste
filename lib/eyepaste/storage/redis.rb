@@ -33,10 +33,28 @@ module Eyepaste
         ret
       end
 
-      def get_inbox(inbox)
+      def get_inbox(inbox, options = {})
+        merged_options = {
+          sort: :asc,
+          limit: 0,
+          start: 1
+        }.merge(options)
+
+        start_i = [0, merged_options[:start] - 1].max
+        limit = [0, merged_options[:limit]].max
+
         emails = []
         inbox_keys = @redis.keys("email:#{inbox}_*")
-        inbox_keys.sort.each do |key|
+
+        inbox_keys.sort!
+        inbox_keys.reverse! if merged_options[:sort] == :desc
+
+        end_i = (limit == 0 ? inbox_keys.length: start_i + limit) - 1
+        end_i = [inbox_keys.length - 1, end_i].min
+
+        inbox_keys = inbox_keys[(start_i..end_i)]
+
+        inbox_keys.each do |key|
           from_storage = @redis.mapped_hmget(key, *_storage_hash_keys(Eyepaste::Email.new.attributes.keys))
           emails << Eyepaste::Email.new(from_storage)
         end

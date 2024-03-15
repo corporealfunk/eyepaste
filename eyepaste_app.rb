@@ -21,7 +21,24 @@ module Eyepaste
       _set_host_and_port
       storage = Eyepaste::Storage.factory
       @inbox = params[:captures].first
-      @emails = storage.get_inbox("#{params[:captures].first}")
+
+      sort_map = {
+        "asc" => :asc,
+        "desc" => :desc
+      }
+
+      sort = sort_map[params["sort"]]
+
+      inbox_params = {
+        sort: sort,
+        limit: params["limit"] == nil ? nil : params["limit"].to_i,
+        start: params["start"] == nil ? nil : params["start"].to_i
+      }.compact
+
+      @emails = storage.get_inbox(
+        "#{params[:captures].first}",
+        inbox_params
+      )
 
       case params[:captures][1]
       when nil
