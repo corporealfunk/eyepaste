@@ -3,6 +3,7 @@ GEM
   specs:
     connection_pool (2.3.0)
     daemons (1.4.1)
+    date (3.3.4)
     diff-lcs (1.5.0)
     eventmachine (1.2.7)
     haml (5.2.2)
@@ -12,12 +13,24 @@ GEM
     logging (2.3.1)
       little-plugger (~> 1.1)
       multi_json (~> 1.14)
-    mail (2.7.1)
+    mail (2.8.1)
       mini_mime (>= 0.1.1)
+      net-imap
+      net-pop
+      net-smtp
     mini_mime (1.1.2)
     multi_json (1.15.0)
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
+    net-imap (0.4.10)
+      date
+      net-protocol
+    net-pop (0.1.2)
+      net-protocol
+    net-protocol (0.2.2)
+      timeout
+    net-smtp (0.4.0.1)
+      net-protocol
     nio4r (2.5.8)
     puma (6.0.0)
       nio4r (~> 2.0)
@@ -52,6 +65,7 @@ GEM
     temple (0.9.1)
     tilt (2.0.11)
     timecop (0.9.5)
+    timeout (0.4.1)
 
 PLATFORMS
   ruby
@@ -69,6 +83,9 @@ DEPENDENCIES
   rspec
   sinatra
   timecop
+
+RUBY VERSION
+   ruby 3.1.4p223
 
 BUNDLED WITH
    2.2.33

@@ -28,7 +28,7 @@ eyepaste should run any current Linux distros.
 
 ### Ruby
 
-eyepaste has been tested against ruby-3.0.4.
+eyepaste has been tested against ruby-3.1.4.
 
 ### RubyGems
 

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '~> 3.0.4'
+ruby '~> 3.1.4'
 
 gem "sinatra", :require => "sinatra/base"
 gem "haml", '~>5'
